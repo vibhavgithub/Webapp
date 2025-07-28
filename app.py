@@ -13,25 +13,15 @@ except FileNotFoundError:
     st.stop() # Stop the app if the model file is not found
 
 # Load the scaler used during training
-# IMPORTANT: You need to save and load the scaler as well!
-# For now, we'll create a dummy scaler, but you should replace this
-# with the actual scaler fitted on your training data.
-# You would typically save the scaler like this after fitting:
-# with open('scaler.pkl', 'wb') as f:
-#     pickle.dump(scaler, f)
-# And load it like this:
-# try:
-#     with open('scaler.pkl', 'rb') as f:
-#         scaler = pickle.load(f)
-# except FileNotFoundError:
-#     st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
-#     st.stop()
+try:
+    with open('scaler.pkl', 'rb') as f:
+        scaler = pickle.load(f)
+except FileNotFoundError:
+    st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
+    st.stop()
 
-# Dummy scaler for demonstration - REPLACE WITH YOUR ACTUAL SCALER
-# You need to ensure this scaler has the same number of features as your model expects (20 features)
-# and is fitted in the same way as the one used during model training.
-# A simple way to get the feature names is from your X_train or X_resampled DataFrame columns.
-# Assuming your X_train columns are the features:
+# Define feature names - make sure these match the order used during training
+# You can get this from the columns of your X_train or X_resampled DataFrame
 feature_names = ['Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption',
                  'Fruit_Consumption', 'Green_Vegetables_Consumption',
                  'FriedPotato_Consumption', 'Age', 'Checkup_Encoded',
@@ -39,12 +29,6 @@ feature_names = ['Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption',
                  'Other_Cancer_Encoded', 'Depression_Encoded', 'Arthritis_Encoded',
                  'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
                  'BMI_Category']
-
-# Create a dummy scaler and fit it with some dummy data to match the expected input shape
-# This is a placeholder. You MUST use the actual scaler fitted on your training data.
-dummy_data = pd.DataFrame(np.random.rand(10, len(feature_names)), columns=feature_names)
-scaler = StandardScaler()
-scaler.fit(dummy_data)
 
 
 st.title("Cardiovascular Disease Prediction")
@@ -78,15 +62,16 @@ gender = st.selectbox("Gender", options=["Female", "Male"])
 female = 1 if gender == "Female" else 0
 male = 1 if gender == "Male" else 0
 
-# Assuming BMI Category is derived from BMI - you might need to add the logic here
-# For simplicity, I'm adding a placeholder input, but you should calculate this from BMI
-# based on the ranges used when creating your training data.
-# For example:
-# if bmi < 18.5: bmi_category = 0 # Underweight
-# elif 18.5 <= bmi < 25: bmi_category = 1 # Healthy Weight
-# elif 25 <= bmi < 30: bmi_category = 2 # Overweight
-# else: bmi_category = 3 # Obese
-bmi_category = st.selectbox("BMI Category (Select based on BMI ranges used in training)", options=[0, 1, 2, 3], format_func=lambda x: ["Underweight", "Healthy Weight", "Overweight", "Obese"][x])
+# Calculate BMI Category based on BMI input
+# Ensure these ranges match how you categorized BMI in your training data
+if bmi < 18.5:
+    bmi_category = 0  # Underweight
+elif 18.5 <= bmi < 25:
+    bmi_category = 1  # Healthy Weight
+elif 25 <= bmi < 30:
+    bmi_category = 2  # Overweight
+else:
+    bmi_category = 3  # Obese
 
 
 # Create a button to make a prediction
@@ -99,8 +84,7 @@ if st.button("Predict"):
                                 bmi_category]],
                               columns=feature_names) # Use the defined feature names
 
-    # Scale the user input
-    # IMPORTANT: Use the same scaler object that was fitted on your training data
+    # Scale the user input using the loaded scaler
     user_input_scaled = scaler.transform(user_input)
 
     # Make prediction
