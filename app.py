@@ -80,7 +80,7 @@ if st.button("Predict"):
     prediction_proba = model.predict_proba(user_input)[:, 1] # Probability of Heart Disease (class 1)
 
     st.subheader("Prediction Result:")
-    #st.write(f"Probability of Heart Disease: **{prediction_proba[0]:.2f}**")
+    st.write(f"Probability of Heart Disease: **{prediction_proba[0]:.2f}**")
     st.metric(label="Probability of Heart Disease", value=f"{prediction_proba[0]*100:.2f}%")
 
     # You can add conditional messages based on the probability
