@@ -41,7 +41,8 @@ with left:
         gender = st.selectbox("Gender", ["Female", "Male"])
 
 with right:
-    st.markdown("### Prediction Result")
+    st.markdown("<div style='text-align: right;'>### Prediction Result</div>", unsafe_allow_html=True)
+
     female = 1 if gender == "Female" else 0
     male = 1 if gender == "Male" else 0
 
@@ -61,18 +62,14 @@ with right:
                                     depression, arthritis, diabetes, smoking_history, female, male,
                                     bmi_category]],
                                   columns=model.feature_names_in_)
-        prediction_proba = model.predict_proba(user_input)[:, 1]
 
-        st.metric("Probability of Heart Disease", f"{prediction_proba[0]*100:.2f}%")
+        prediction_proba = model.predict_proba(user_input)[:, 1]
+        st.markdown(
+            f"<div style='text-align: right; font-size: 24px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+            unsafe_allow_html=True
+        )
 
         if prediction_proba[0] > 0.5:
             st.warning("Higher likelihood of heart disease.")
         else:
             st.info("Lower likelihood of heart disease.")
-
-st.markdown("---")
-st.markdown("### Data Insights Dashboard")
-st.markdown(
-    "<div style='text-align: center;'><a href='https://your-dashboard-link.com' target='_blank' style='font-size:18px; font-weight:bold;'>Open Data Insights Dashboard</a></div>",
-    unsafe_allow_html=True
-)
