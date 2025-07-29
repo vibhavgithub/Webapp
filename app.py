@@ -39,8 +39,8 @@ fruit_consumption = st.number_input("Fruit Consumption (servings per day)", min_
 green_vegetables_consumption = st.number_input("Green Vegetables Consumption (servings per day)", min_value=0, max_value=100, value=30)
 fried_potato_consumption = st.number_input("Fried Potato Consumption (servings per week)", min_value=0, max_value=100, value=0)
 age = st.number_input("Age", min_value=18, max_value=120, value=50)
-checkup = st.selectbox("Last Checkup", options=[0, 1, 2, 3, 4], format_func=lambda x: ["Within past year", "Within past 2 years", "Within past 5 years", "5+ years ago", "Never"][x])
-general_health = st.selectbox("General Health", options=[0, 1, 2, 3, 4], format_func=lambda x: ["Excellent", "Very Good", "Good", "Fair", "Poor"][x])
+checkup = st.selectbox("Last Checkup", options=[0, 1, 2, 3, 4], format_func=lambda x: [ "Never","5+ years ago","Within past 5 years","Within past 2 years","Within past year"][x])
+general_health = st.selectbox("General Health", options=[0, 1, 2, 3, 4], format_func=lambda x: ["Poor","Fair","Good","Very Good","Excellent"][x])
 exercise = st.selectbox("Exercise", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
 skin_cancer = st.selectbox("Skin Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
 other_cancer = st.selectbox("Other Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
@@ -63,7 +63,7 @@ elif 18.5 <= bmi < 25:
 elif 25 <= bmi < 30:
     bmi_category = 2  # Overweight
 else:
-    bmi_category = 3  # Obese
+    bmi_category = 0  # Obese
 
 
 # Create a button to make a prediction
