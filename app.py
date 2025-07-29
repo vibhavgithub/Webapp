@@ -74,7 +74,7 @@ if st.button("Predict"):
                                 checkup, general_health, exercise, skin_cancer, other_cancer,
                                 depression, arthritis, diabetes, smoking_history, female, male,
                                 bmi_category]],
-                              columns=feature_names) # Use the defined feature names
+                              columns=model.feature_names_in_) # Use the defined feature names
 
     # Make prediction
     prediction_proba = model.predict_proba(user_input)[:, 1] # Probability of Heart Disease (class 1)
