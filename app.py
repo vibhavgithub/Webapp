@@ -13,12 +13,12 @@ except FileNotFoundError:
     st.stop() # Stop the app if the model file is not found
 
 # Load the scaler used during training
-try:
-    with open('scaler.pkl', 'rb') as f:
-        scaler = pickle.load(f)
-except FileNotFoundError:
-    st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
-    st.stop()
+# try:
+#     with open('scaler.pkl', 'rb') as f:
+#         scaler = pickle.load(f)
+# except FileNotFoundError:
+#     st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
+#     st.stop()
 
 # Define feature names - make sure these match the order used during training
 # You can get this from the columns of your X_train or X_resampled DataFrame
@@ -85,10 +85,10 @@ if st.button("Predict"):
                               columns=feature_names) # Use the defined feature names
 
     # Scale the user input using the loaded scaler
-    user_input_scaled = scaler.transform(user_input)
+    # user_input_scaled = scaler.transform(user_input)
 
     # Make prediction
-    prediction_proba = model.predict_proba(user_input_scaled)[:, 1] # Probability of Heart Disease (class 1)
+    prediction_proba = model.predict_proba(user_input)[:, 1] # Probability of Heart Disease (class 1)
 
     st.subheader("Prediction Result:")
     st.write(f"Probability of Heart Disease: **{prediction_proba[0]:.2f}**")
