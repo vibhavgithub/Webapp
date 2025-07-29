@@ -4,7 +4,7 @@ import pickle
 
 # --- Page config ---
 st.set_page_config(layout="wide")
-st.title("Cardiovascular Disease Prediction")
+st.markdown("<h1 style='text-align:center;'>Cardiovascular Disease Prediction</h1>", unsafe_allow_html=True)
 
 # Load trained model
 try:
