@@ -7,20 +7,27 @@ try:
     with open('best_adaboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
-    st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
+    st.error("Model file 'best_adaboost_model.pkl' not found.")
     st.stop()
 
 st.set_page_config(layout="wide")
 st.title("Cardiovascular Disease Prediction")
 
-# Two columns layout
+# Create two columns
 left_col, right_col = st.columns([2, 3])
 
-# --- Left Column: Scrollable Inputs ---
+# --- Left Panel: Scrollable Inputs ---
 with left_col:
     st.markdown(
         """
-        <div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+        <style>
+        .scrollable-panel {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        </style>
+        <div class="scrollable-panel">
         """,
         unsafe_allow_html=True
     )
@@ -47,9 +54,9 @@ with left_col:
     gender = st.selectbox("Gender", options=["Female", "Male"])
     st.markdown("</div>", unsafe_allow_html=True)
 
+# Gender encoding and BMI category calculation
 female = 1 if gender == "Female" else 0
 male = 1 if gender == "Male" else 0
-
 if bmi < 18.5:
     bmi_category = 0
 elif 18.5 <= bmi < 25:
@@ -59,9 +66,29 @@ elif 25 <= bmi < 30:
 else:
     bmi_category = 0
 
-# --- Right Column: Centered Prediction ---
+# --- Right Panel: Fixed & Centered ---
 with right_col:
-    st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <style>
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            text-align: center;
+        }
+        .dashboard-link {
+            margin-top: auto;
+            text-align: center;
+        }
+        </style>
+        <div class="right-panel">
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown("### Prediction Result")
     if st.button("Predict", use_container_width=True):
         user_input = pd.DataFrame([[height, weight, bmi, alcohol_consumption, fruit_consumption,
@@ -77,10 +104,15 @@ with right_col:
         else:
             st.info("Lower likelihood of heart disease.")
 
-    st.markdown("### Data Insights Dashboard")
     st.markdown(
-        "<a href='https://your-dashboard-link.com' target='_blank' style='font-size:20px; font-weight:bold;'>"
-        "📊 Open Data Insights Dashboard</a>",
+        """
+        <div class="dashboard-link">
+            <h4>Data Insights Dashboard</h4>
+            <a href='https://your-dashboard-link.com' target='_blank' style='font-size:20px; font-weight:bold;'>
+                📊 Open Data Insights Dashboard
+            </a>
+        </div>
+        </div>
+        """,
         unsafe_allow_html=True
     )
-    st.markdown("</div>", unsafe_allow_html=True)
