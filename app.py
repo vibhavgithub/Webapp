@@ -16,7 +16,7 @@ except FileNotFoundError:
 st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs, right for prediction
-left, right = st.columns([2, 3])
+left, right = st.columns([3, 2])
 
 with left:
     st.markdown("### Enter Patient Information")
@@ -29,8 +29,11 @@ with left:
         green_vegetables_consumption = st.number_input("Green Vegetables (servings/day)", 0, 100, 30)
         fried_potato_consumption = st.number_input("Fried Potato (servings/week)", 0, 100, 0)
         age = st.number_input("Age", 18, 120, 50)
-        checkup = st.selectbox("Last Checkup", [0, 1, 2, 3, 4], format_func=lambda x: ["Never","5+ years ago","Within past 5 years","Within past 2 years","Within past year"][x])
-        general_health = st.selectbox("General Health", [0, 1, 2, 3, 4], format_func=lambda x: ["Poor","Fair","Good","Very Good","Excellent"][x])
+        checkup = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
+                               format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
+                                                      "Within past 2 years", "Within past year"][x])
+        general_health = st.selectbox("General Health", [0, 1, 2, 3, 4],
+                                      format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x])
         exercise = st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x])
         skin_cancer = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
         other_cancer = st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
@@ -41,19 +44,19 @@ with left:
         gender = st.selectbox("Gender", ["Female", "Male"])
 
 with right:
-    st.markdown("<div style='text-align: right;'>### Prediction Result</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: right; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
     female = 1 if gender == "Female" else 0
     male = 1 if gender == "Male" else 0
 
     if bmi < 18.5:
-        bmi_category = 0  # Underweight
+        bmi_category = 0
     elif 18.5 <= bmi < 25:
-        bmi_category = 1  # Healthy Weight
+        bmi_category = 1
     elif 25 <= bmi < 30:
-        bmi_category = 2  # Overweight
+        bmi_category = 2
     else:
-        bmi_category = 0  # Obese
+        bmi_category = 0
 
     if st.button("Predict", use_container_width=True):
         user_input = pd.DataFrame([[height, weight, bmi, alcohol_consumption, fruit_consumption,
