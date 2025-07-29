@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import pickle
-import numpy as np
 
 # Load the trained model
 try:
@@ -11,43 +10,46 @@ except FileNotFoundError:
     st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-# Page configuration
 st.set_page_config(layout="wide")
 st.title("Cardiovascular Disease Prediction")
 
-# Layout: two columns
+# Two columns layout
 left_col, right_col = st.columns([2, 3])
 
-# --- Left: Scrollable patient inputs ---
+# --- Left Column: Scrollable Inputs ---
 with left_col:
+    st.markdown(
+        """
+        <div style="max-height: 600px; overflow-y: auto; padding-right: 10px;">
+        """,
+        unsafe_allow_html=True
+    )
     st.markdown("### Enter Patient Information")
-    with st.container():
-        height = st.number_input("Height (cm)", min_value=50, max_value=300, value=170)
-        weight = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
-        bmi = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
-        alcohol_consumption = st.number_input("Alcohol Consumption (drinks per week)", min_value=0, max_value=100, value=0)
-        fruit_consumption = st.number_input("Fruit Consumption (servings per day)", min_value=0, max_value=100, value=30)
-        green_vegetables_consumption = st.number_input("Green Vegetables Consumption (servings per day)", min_value=0, max_value=100, value=30)
-        fried_potato_consumption = st.number_input("Fried Potato Consumption (servings per week)", min_value=0, max_value=100, value=0)
-        age = st.number_input("Age", min_value=18, max_value=120, value=50)
-        checkup = st.selectbox("Last Checkup", options=[0, 1, 2, 3, 4],
-                               format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years", "Within past 2 years", "Within past year"][x])
-        general_health = st.selectbox("General Health", options=[0, 1, 2, 3, 4],
-                                      format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x])
-        exercise = st.selectbox("Exercise", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        skin_cancer = st.selectbox("Skin Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        other_cancer = st.selectbox("Other Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        depression = st.selectbox("Depression", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        arthritis = st.selectbox("Arthritis", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        diabetes = st.selectbox("Diabetes", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        smoking_history = st.selectbox("Smoking History", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
-        gender = st.selectbox("Gender", options=["Female", "Male"])
+    height = st.number_input("Height (cm)", min_value=50, max_value=300, value=170)
+    weight = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
+    bmi = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
+    alcohol_consumption = st.number_input("Alcohol Consumption (drinks per week)", min_value=0, max_value=100, value=0)
+    fruit_consumption = st.number_input("Fruit Consumption (servings per day)", min_value=0, max_value=100, value=30)
+    green_vegetables_consumption = st.number_input("Green Vegetables Consumption (servings per day)", min_value=0, max_value=100, value=30)
+    fried_potato_consumption = st.number_input("Fried Potato Consumption (servings per week)", min_value=0, max_value=100, value=0)
+    age = st.number_input("Age", min_value=18, max_value=120, value=50)
+    checkup = st.selectbox("Last Checkup", options=[0, 1, 2, 3, 4],
+                           format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years", "Within past 2 years", "Within past year"][x])
+    general_health = st.selectbox("General Health", options=[0, 1, 2, 3, 4],
+                                  format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x])
+    exercise = st.selectbox("Exercise", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    skin_cancer = st.selectbox("Skin Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    other_cancer = st.selectbox("Other Cancer", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    depression = st.selectbox("Depression", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    arthritis = st.selectbox("Arthritis", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    diabetes = st.selectbox("Diabetes", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    smoking_history = st.selectbox("Smoking History", options=[0, 1], format_func=lambda x: ["No", "Yes"][x])
+    gender = st.selectbox("Gender", options=["Female", "Male"])
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# Gender encoding
 female = 1 if gender == "Female" else 0
 male = 1 if gender == "Male" else 0
 
-# BMI Category calculation
 if bmi < 18.5:
     bmi_category = 0
 elif 18.5 <= bmi < 25:
@@ -55,11 +57,12 @@ elif 18.5 <= bmi < 25:
 elif 25 <= bmi < 30:
     bmi_category = 2
 else:
-    bmi_category = 0  # Obese
+    bmi_category = 0
 
-# --- Right: Prediction + Dashboard ---
+# --- Right Column: Centered Prediction ---
 with right_col:
-    st.markdown("### Prediction Result", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+    st.markdown("### Prediction Result")
     if st.button("Predict", use_container_width=True):
         user_input = pd.DataFrame([[height, weight, bmi, alcohol_consumption, fruit_consumption,
                                     green_vegetables_consumption, fried_potato_consumption, age,
@@ -67,19 +70,17 @@ with right_col:
                                     depression, arthritis, diabetes, smoking_history, female, male,
                                     bmi_category]],
                                   columns=model.feature_names_in_)
-
         prediction_proba = model.predict_proba(user_input)[:, 1]
         st.metric(label="Probability of Heart Disease", value=f"{prediction_proba[0]*100:.2f}%")
-
         if prediction_proba[0] > 0.5:
             st.warning("Higher likelihood of heart disease.")
         else:
             st.info("Lower likelihood of heart disease.")
 
-    st.markdown("---")
+    st.markdown("### Data Insights Dashboard")
     st.markdown(
-        "<div style='text-align: center; margin-top: 50px;'>"
         "<a href='https://your-dashboard-link.com' target='_blank' style='font-size:20px; font-weight:bold;'>"
-        "📊 Open Data Insights Dashboard</a></div>",
+        "📊 Open Data Insights Dashboard</a>",
         unsafe_allow_html=True
     )
+    st.markdown("</div>", unsafe_allow_html=True)
