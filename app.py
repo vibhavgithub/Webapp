@@ -15,8 +15,9 @@ except FileNotFoundError:
 
 st.title("Cardiovascular Disease Prediction")
 
-# Layout: left for inputs, right for prediction
-left, right = st.columns([3, 2])
+# Layout: left for inputs, spacer for gap, right for prediction
+left, gap, right = st.columns([3, 0.3, 2])
+
 
 with left:
     st.markdown("### Enter Patient Information")
@@ -44,7 +45,7 @@ with left:
         gender = st.selectbox("Gender", ["Female", "Male"])
 
 with right:
-    st.markdown("<div style='text-align: right; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
     female = 1 if gender == "Female" else 0
     male = 1 if gender == "Male" else 0
@@ -67,8 +68,8 @@ with right:
                                   columns=model.feature_names_in_)
 
         prediction_proba = model.predict_proba(user_input)[:, 1]
-        st.markdown(
-            f"<div style='text-align: right; font-size: 24px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+        st.write(
+            f"<div style='text-align: center; font-size: 24px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
             unsafe_allow_html=True
         )
 
