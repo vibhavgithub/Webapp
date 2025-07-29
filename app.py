@@ -13,7 +13,7 @@ except FileNotFoundError:
     st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-st.title("Cardiovascular Disease Prediction")
+st.title("### Cardiovascular Disease Prediction")
 
 # Layout: left for inputs, spacer for gap, right for prediction
 left, gap, right = st.columns([3, 0.3, 2])
