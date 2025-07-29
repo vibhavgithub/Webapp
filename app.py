@@ -11,15 +11,15 @@ except FileNotFoundError:
     st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-# Set wide layout
+# Page configuration
 st.set_page_config(layout="wide")
 st.title("Cardiovascular Disease Prediction")
 
-# Create three columns: left for inputs (scrollable), center for prediction, right for dashboard link
-left, center, right = st.columns([2, 2, 1])
+# Layout: two columns
+left_col, right_col = st.columns([2, 3])
 
-# --- Left panel: Patient inputs ---
-with left:
+# --- Left: Scrollable patient inputs ---
+with left_col:
     st.markdown("### Enter Patient Information")
     with st.container():
         height = st.number_input("Height (cm)", min_value=50, max_value=300, value=170)
@@ -55,11 +55,11 @@ elif 18.5 <= bmi < 25:
 elif 25 <= bmi < 30:
     bmi_category = 2
 else:
-    bmi_category = 0
+    bmi_category = 0  # Obese
 
-# --- Center panel: Prediction ---
-with center:
-    st.markdown("### Prediction Result")
+# --- Right: Prediction + Dashboard ---
+with right_col:
+    st.markdown("### Prediction Result", unsafe_allow_html=True)
     if st.button("Predict", use_container_width=True):
         user_input = pd.DataFrame([[height, weight, bmi, alcohol_consumption, fruit_consumption,
                                     green_vegetables_consumption, fried_potato_consumption, age,
@@ -69,7 +69,6 @@ with center:
                                   columns=model.feature_names_in_)
 
         prediction_proba = model.predict_proba(user_input)[:, 1]
-
         st.metric(label="Probability of Heart Disease", value=f"{prediction_proba[0]*100:.2f}%")
 
         if prediction_proba[0] > 0.5:
@@ -77,7 +76,10 @@ with center:
         else:
             st.info("Lower likelihood of heart disease.")
 
-# --- Right panel: Dashboard link ---
-with right:
-    st.markdown("### Data Insights Dashboard")
-    st.markdown("[**Open Dashboard**](https://your-dashboard-link.com)", unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown(
+        "<div style='text-align: center; margin-top: 50px;'>"
+        "<a href='https://your-dashboard-link.com' target='_blank' style='font-size:20px; font-weight:bold;'>"
+        "📊 Open Data Insights Dashboard</a></div>",
+        unsafe_allow_html=True
+    )
