@@ -13,7 +13,7 @@ except FileNotFoundError:
     st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-st.title("### Cardiovascular Disease Prediction")
+st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs, spacer for gap, right for prediction
 left, gap, right = st.columns([3, 0.3, 2])
@@ -69,7 +69,7 @@ with right:
 
         prediction_proba = model.predict_proba(user_input)[:, 1]
         st.write(
-            f"<div style='text-align: center; font-size: 24px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+            f"<div style='text-align: center; font-size: 18px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
             unsafe_allow_html=True
         )
 
