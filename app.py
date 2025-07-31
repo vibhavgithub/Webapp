@@ -24,7 +24,7 @@ st.markdown("""
         background-color: #007ac1; /* Darker blue for header */
         padding: 15px;
         border-bottom: 2px solid #005b9f; /* Add a bottom border */
-        margin-bottom: 0; /* Remove bottom margin from header */
+        margin-bottom: 0 !important; /* Remove bottom margin from header, using !important for override */
     }
     .stApp > header h1 {
         color: white; /* White text for title */
@@ -33,6 +33,11 @@ st.markdown("""
         padding: 0; /* Remove default padding */
         margin-top: -30px; /* Adjust top margin to reduce gap above title */
     }
+    /* Remove top margin from the main content area below the header */
+    .stApp > div:first-child > div:first-child {
+        margin-top: 0 !important;
+    }
+
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
         color: #004d80; /* Dark blue for headers */
