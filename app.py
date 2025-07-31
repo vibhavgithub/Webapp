@@ -11,7 +11,7 @@ st.markdown("""
     <style>
     /* General body styling */
     body {
-        color: #333;
+        color: #1a1a1a; /* Darker grey for general text */
         background-color: #f4f4f4; /* Light grey background */
         font-family: 'Arial', sans-serif;
     }
@@ -27,7 +27,7 @@ st.markdown("""
     }
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
-        color: #0e1117;
+        color: #0e1117; /* Keep very dark grey for headers */
     }
     /* Custom CSS for scrollable area */
     .scrollable-container {
