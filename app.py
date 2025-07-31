@@ -3,7 +3,76 @@ import pandas as pd
 import pickle
 import numpy as np
 
-st.set_page_config(layout="wide")
+# Configure the page with a wider layout
+st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
+
+# Apply custom CSS for enhanced styling
+st.markdown("""
+    <style>
+    /* General body styling */
+    body {
+        color: #333;
+        background-color: #f4f4f4;
+        font-family: 'Arial', sans-serif;
+    }
+    /* Header styling */
+    h1, h2, h3, h4, h5, h6 {
+        color: #0e1117;
+    }
+    /* Custom CSS for scrollable area */
+    .scrollable-container {
+        max-height: 600px; /* Adjust height as needed */
+        overflow-y: auto;
+        padding-right: 15px; /* Add some padding to the right for the scrollbar */
+        border: 1px solid #ddd; /* Add a subtle border */
+        padding: 10px; /* Add padding inside the container */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #fff; /* White background for the input area */
+    }
+    /* Centering content in the right panel */
+    .centered-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px; /* Add some padding around centered content */
+        border: 1px solid #ddd; /* Add a subtle border */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #fff; /* White background for the prediction area */
+        margin-top: 20px; /* Add space above the prediction result */
+    }
+    /* Style for the Predict button */
+    .stButton>button {
+        background-color: #4CAF50; /* Green background */
+        color: white; /* White text */
+        padding: 10px 24px; /* Some padding */
+        text-align: center; /* Centered text */
+        text-decoration: none; /* Remove underline */
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 2px;
+        cursor: pointer; /* Mouse pointer on hover */
+        border-radius: 8px; /* Rounded corners */
+        border: none; /* Remove border */
+    }
+     .stButton>button:hover {
+        background-color: #45a049; /* Darker green on hover */
+    }
+    /* Style for the prediction result text */
+    .prediction-text {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 15px; /* Space above the text */
+    }
+    /* Style for the warning/info messages */
+    .st-alert {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 
 # Load the trained model
 try:
@@ -24,7 +93,7 @@ except FileNotFoundError:
 st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs (ratio 1), spacer for gap, right for prediction (ratio 3)
-left, gap, right = st.columns([2, 0.5, 3]) # Adjusted ratio and gap
+left, gap, right = st.columns([1, 0.3, 3]) # Adjusted ratio and gap
 
 
 # Define feature names - ensuring they match the training data
@@ -54,18 +123,8 @@ except AttributeError:
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
 with left:
-    st.markdown("#### Enter Patient Information")
+    st.markdown("### Enter Patient Information")
     user_inputs = {}
-    # Apply custom CSS for scrollable area and set max width
-    st.markdown("""
-        <style>
-        .scrollable-container {
-            max-height: 600px; /* Adjust height as needed */
-            overflow-y: auto;
-            padding-right: 15px; /* Add some padding to the right for the scrollbar */
-        }
-        </style>
-    """, unsafe_allow_html=True)
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Only include input fields for important features
@@ -121,7 +180,9 @@ with left:
 
 
 with right:
-    st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
+    # Apply centering to the content within the right column
+    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
     # Initialize a dictionary with default values for all features
@@ -156,8 +217,8 @@ with right:
 
         # Make prediction
         prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
-        st.write(
-            f"<div style='text-align: center; font-size: 18px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+        st.markdown(
+            f"<div class='prediction-text'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
             unsafe_allow_html=True
         )
 
@@ -168,5 +229,6 @@ with right:
 
     # Add a link to the Data Insights Dashboard below the right panel
     st.markdown("---") # Add a horizontal rule for separation
-    st.markdown("### Data Insight Dashboard")
     st.markdown("[Data Insights Dashboard Link](YOUR_DASHBOARD_LINK_HERE)") # Replace YOUR_DASHBOARD_LINK_HERE with the actual link
+
+    st.markdown('</div>', unsafe_allow_html=True) # Close the centered-content div
