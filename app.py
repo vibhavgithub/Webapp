@@ -30,6 +30,7 @@ st.markdown("""
         text-align: center;
         margin: 0; /* Remove default margin */
         padding: 0; /* Remove default padding */
+        margin-top: -30px; /* Adjust top margin to reduce gap */
     }
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
