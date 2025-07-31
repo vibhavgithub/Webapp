@@ -24,7 +24,7 @@ except FileNotFoundError:
 st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs (ratio 1), spacer for gap, right for prediction (ratio 3)
-left, gap, right = st.columns([1, 0.3, 3]) # Adjusted ratio and gap
+left, gap, right = st.columns([1, 0.5, 3]) # Adjusted ratio and gap
 
 
 # Define feature names - ensuring they match the training data
@@ -54,7 +54,7 @@ except AttributeError:
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
 with left:
-    st.markdown("### Enter Patient Information")
+    st.markdown("##### Enter Patient Information")
     user_inputs = {}
     # Apply custom CSS for scrollable area and set max width
     st.markdown("""
@@ -63,12 +63,6 @@ with left:
             max-height: 600px; /* Adjust height as needed */
             overflow-y: auto;
             padding-right: 15px; /* Add some padding to the right for the scrollbar */
-        }
-        .centered-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -127,8 +121,6 @@ with left:
 
 
 with right:
-    # Apply centering to the content within the right column
-    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
@@ -176,6 +168,5 @@ with right:
 
     # Add a link to the Data Insights Dashboard below the right panel
     st.markdown("---") # Add a horizontal rule for separation
+    st.markdown("### Data Insight Dashboard")
     st.markdown("[Data Insights Dashboard Link](YOUR_DASHBOARD_LINK_HERE)") # Replace YOUR_DASHBOARD_LINK_HERE with the actual link
-
-    st.markdown('</div>', unsafe_allow_html=True) # Close the centered-content div
