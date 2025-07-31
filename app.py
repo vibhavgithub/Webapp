@@ -33,6 +33,7 @@ st.markdown("""
         margin: 0; /* Remove default margin */
         padding: 0; /* Remove default padding */
         margin-top: -30px; /* Adjust top margin to reduce gap above title */
+        margin-bottom: 0 !important; /* Tighten up space below title */
     }
     /* Remove top margin from the main content area below the header - more specific selector */
     .stApp > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
