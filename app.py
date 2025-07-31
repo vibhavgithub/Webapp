@@ -159,7 +159,7 @@ with right:
     if prediction_proba[0] > 0.5:
       st.markdown(
         "<div style='text-align:center;'>"
-        "<div class='stAlert' style='background-color:#fff3cd; color:#856404; padding: 16px; font-size:16px; border-radius: 6px;'>"
+        "<div class='stAlert' style='background-color:#fff3cd; color:#856404; padding: 12px; font-size:16px; border-radius: 6px;'>"
         "⚠️ Higher likelihood of heart disease."
         "</div></div>",
         unsafe_allow_html=True
@@ -167,7 +167,7 @@ with right:
     else:
       st.markdown(
         "<div style='text-align:center;'>"
-        "<div class='stAlert' style='background-color:#d1ecf1; color:#0c5460; padding: 16px;font-size:16px; border-radius: 6px;'>"
+        "<div class='stAlert' style='background-color:#d1ecf1; color:#0c5460; padding: 12px;font-size:16px; border-radius: 6px;'>"
         "ℹ️ Lower likelihood of heart disease."
         "</div></div>",
         unsafe_allow_html=True
