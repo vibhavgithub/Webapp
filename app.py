@@ -68,7 +68,7 @@ user_inputs = {}
 
 # Place input fields in the two left columns
 with input_col1:
-    st.markdown("### Enter Patient Information (Part 1)")
+    st.markdown("### Enter Patient Information")
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Distribute input fields between the two columns - adjust as needed
@@ -87,19 +87,19 @@ with input_col1:
             user_inputs['Smoking_History_Encoded'] = st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='smoking_input')
         if 'Skin_Cancer_Encoded' in important_features:
             user_inputs['Skin_Cancer_Encoded'] = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='skin_cancer_input')
+        if 'Checkup_Encoded' in important_features:
+            user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
+                                                          format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
+                                                                                 "Within past 2 years", "Within past year"][x], key='checkup_input')
 
         st.markdown('</div>', unsafe_allow_html=True)
 
 
 with input_col2:
-    st.markdown("### Enter Patient Information (Part 2)")
+    # Removed the header for the second column
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Continue distributing input fields
-        if 'Checkup_Encoded' in important_features:
-            user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
-                                                          format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
-                                                                                 "Within past 2 years", "Within past year"][x], key='checkup_input')
         if 'Depression_Encoded' in important_features:
             user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='depression_input')
         if 'Height_(cm)' in important_features:
