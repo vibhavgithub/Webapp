@@ -6,38 +6,47 @@ import numpy as np
 # Configure the page with a wider layout
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 
-# Apply custom CSS for enhanced styling and colors
+# Apply custom CSS for a new theme
 st.markdown("""
     <style>
     /* General body styling */
     body {
-        color: #1a1a1a; /* Darker grey for general text */
-        background-color: #f4f4f4; /* Light grey background */
+        color: #333; /* Dark text color */
+        background-color: #e0f2f7; /* Light blue background */
         font-family: 'Arial', sans-serif;
+    }
+    /* Main app container */
+    .stApp {
+        background-color: #e0f2f7; /* Match body background */
     }
     /* Title styling */
     .stApp > header {
-        background-color: #FF6347; /* Tomato color for header */
-        padding: 10px;
-        border-radius: 5px;
+        background-color: #007ac1; /* Darker blue for header */
+        padding: 15px;
+        border-bottom: 2px solid #005b9f; /* Add a bottom border */
     }
     .stApp > header h1 {
         color: white; /* White text for title */
         text-align: center;
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
     }
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
-        color: #0e1117; /* Keep very dark grey for headers */
+        color: #004d80; /* Dark blue for headers */
+        margin-top: 1.5rem; /* Add space above headers */
+        margin-bottom: 1rem; /* Add space below headers */
     }
     /* Custom CSS for scrollable area */
     .scrollable-container {
         max-height: 600px; /* Adjust height as needed */
         overflow-y: auto;
         padding-right: 15px; /* Add some padding to the right for the scrollbar */
-        border: 1px solid #ddd; /* Add a subtle border */
-        padding: 10px; /* Add padding inside the container */
-        border-radius: 5px; /* Rounded corners */
-        background-color: #fff; /* White background for the input area */
+        border: 1px solid #b3e5fc; /* Light blue border */
+        padding: 15px; /* Add padding inside the container */
+        border-radius: 8px; /* Rounded corners */
+        background-color: #ffffff; /* White background for the input area */
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
     }
     /* Centering content in the right panel */
     .centered-content {
@@ -46,40 +55,48 @@ st.markdown("""
         align-items: center;
         text-align: center;
         padding: 20px; /* Add some padding around centered content */
-        border: 1px solid #ddd; /* Add a subtle border */
-        border-radius: 5px; /* Rounded corners */
-        background-color: #fff; /* White background for the prediction area */
+        border: 1px solid #b3e5fc; /* Light blue border */
+        border-radius: 8px; /* Rounded corners */
+        background-color: #ffffff; /* White background for the prediction area */
         margin-top: 20px; /* Add space above the prediction result */
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
     }
     /* Style for the Predict button */
     .stButton>button {
-        background-color: #4CAF50; /* Green background */
+        background-color: #00bcd4; /* Cyan background */
         color: white; /* White text */
-        padding: 10px 24px; /* Some padding */
+        padding: 12px 28px; /* Increased padding */
         text-align: center; /* Centered text */
         text-decoration: none; /* Remove underline */
         display: inline-block;
-        font-size: 16px;
-        margin: 10px 2px;
+        font-size: 18px; /* Increased font size */
+        margin: 15px 2px; /* Increased margin */
         cursor: pointer; /* Mouse pointer on hover */
         border-radius: 8px; /* Rounded corners */
         border: none; /* Remove border */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
     }
      .stButton>button:hover {
-        background-color: #45a049; /* Darker green on hover */
+        background-color: #00838f; /* Darker cyan on hover */
     }
     /* Style for the prediction result text */
     .prediction-text {
-        font-size: 18px;
+        font-size: 20px; /* Increased font size */
         font-weight: bold;
-        margin-top: 15px; /* Space above the text */
-        color: #007BFF; /* Blue color for prediction text */
+        margin-top: 20px; /* Space above the text */
+        color: #00796b; /* Teal color for prediction text */
     }
-    /* Style for the warning/info messages */
+     /* Style for the warning/info messages */
     .st-alert {
         margin-top: 15px;
-        padding: 10px;
-        border-radius: 5px;
+        padding: 15px; /* Increased padding */
+        border-radius: 8px; /* Rounded corners */
+        font-size: 16px; /* Increased font size */
+    }
+    /* Style for input labels */
+    .stTextInput label, .stSelectbox label, .stNumberInput label {
+        font-weight: bold; /* Make labels bold */
+        color: #004d80; /* Dark blue color for labels */
     }
     </style>
 """, unsafe_allow_html=True)
