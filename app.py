@@ -71,7 +71,7 @@ with right:
             'height', 'weight', 'bmi', 'alcohol_consumption', 'fruit_consumption',
             'green_vegetables_consumption', 'fried_potato_consumption', 'age',
             'checkup', 'general_health', 'exercise', 'skin_cancer', 'other_cancer',
-            'depression', 'arthritis', 'diabetes', 'smoking_history', 'female', 'male',
+            'depression', 'arthritis', 'diabetes', 'smoking_history', 'female', 'male', 
             'bmi_category'
         ]
       
