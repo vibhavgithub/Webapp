@@ -54,7 +54,7 @@ except AttributeError:
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
 with left:
-    st.markdown("### Enter Patient Information")
+    st.markdown("#### Enter Patient Information")
     user_inputs = {}
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
@@ -111,7 +111,7 @@ with left:
 
 
 with right:
-    st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold; color: black;'>Prediction Result</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
     # Initialize a dictionary with default values for all features
