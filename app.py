@@ -93,10 +93,6 @@ with input_col1:
             user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
                                                           format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
                                                                                  "Within past 2 years", "Within past year"][x], key='checkup_input')
-        if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
-        if 'Weight_(kg)' in important_features:
-            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1, key='weight_input')
 
 
         st.markdown('</div>', unsafe_allow_html=True)
@@ -105,7 +101,11 @@ with input_col1:
 with input_col2:
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
-        # Continue distributing input fields
+        # Continue distributing input fields - ensure these are in important_features
+        if 'Height_(cm)' in important_features:
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
+        if 'Weight_(kg)' in important_features:
+            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1, key='weight_input')
         if 'BMI' in important_features:
             user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1, key='bmi_input')
         if 'Alcohol_Consumption' in important_features:
