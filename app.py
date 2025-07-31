@@ -156,9 +156,21 @@ with right:
             
         )
 
-        if prediction_proba[0] > 0.5:
-            st.warning("Higher likelihood of heart disease.")
-        else:
-            st.info("Lower likelihood of heart disease.")
+    if prediction_proba[0] > 0.5:
+      st.markdown(
+        "<div style='text-align:center;'>"
+        "<div class='stAlert' style='background-color:#fff3cd; color:#856404; padding: 16px; border-radius: 6px;'>"
+        "⚠️ Higher likelihood of heart disease."
+        "</div></div>",
+        unsafe_allow_html=True
+    )
+    else:
+      st.markdown(
+        "<div style='text-align:center;'>"
+        "<div class='stAlert' style='background-color:#d1ecf1; color:#0c5460; padding: 16px; border-radius: 6px;'>"
+        "ℹ️ Lower likelihood of heart disease."
+        "</div></div>",
+        unsafe_allow_html=True
+    )
 
-    # Removed the dashboard link as requested
+
