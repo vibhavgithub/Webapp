@@ -139,7 +139,7 @@ feature_names = [
     'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
     'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
     'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
-    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', Smoking_History_Encoded', 'Female', 'Male',
+    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
     'BMI_Category_Encoded'
 ]
 
