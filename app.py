@@ -161,10 +161,9 @@ except AttributeError:
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
 with left:
-    st.markdown("### Enter Patient Information")
+    st.markdown("##### Enter Patient Information")
     user_inputs = {}
     with st.container():
-        st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Only include input fields for important features
         if 'Age' in important_features:
             user_inputs['Age'] = st.number_input("Age", 18, 120, 50)
@@ -219,7 +218,6 @@ with left:
 
 with right:
     # Apply centering to the content within the right column
-    st.markdown('<div class="centered-content">', unsafe_allow_html=True)
     st.markdown("<div style='font-size: 22px; font-weight: bold; color: black;'>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
