@@ -6,14 +6,24 @@ import numpy as np
 # Configure the page with a wider layout
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 
-# Apply custom CSS for enhanced styling
+# Apply custom CSS for enhanced styling and colors
 st.markdown("""
     <style>
     /* General body styling */
     body {
         color: #333;
-        background-color: #f4f4f4;
+        background-color: #f4f4f4; /* Light grey background */
         font-family: 'Arial', sans-serif;
+    }
+    /* Title styling */
+    .stApp > header {
+        background-color: #FF6347; /* Tomato color for header */
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .stApp > header h1 {
+        color: white; /* White text for title */
+        text-align: center;
     }
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
@@ -63,6 +73,7 @@ st.markdown("""
         font-size: 18px;
         font-weight: bold;
         margin-top: 15px; /* Space above the text */
+        color: #007BFF; /* Blue color for prediction text */
     }
     /* Style for the warning/info messages */
     .st-alert {
