@@ -160,7 +160,7 @@ with right:
       st.markdown(
         """
         <div style='text-align:center;'>
-            <div style='display:inline-block; background-color:#fff8e1; color:#8a6d3b; padding:10px 20px; border-radius:6px; font-size:16px; max-width: 400px;'>
+            <div style='display:inline-block; background-color:#fff8e1; color:#8a6d3b; padding:8px 40px; border-radius:6px; font-size:12px; max-width: 400px;'>
                 ⚠️ Higher likelihood of heart disease.
             </div>
         </div>
@@ -171,7 +171,7 @@ with right:
       st.markdown(
         """
         <div style='text-align:center;'>
-            <div style='display:inline-block; background-color:#e0f7fa; color:#31708f; padding:10px 20px; border-radius:6px; font-size:16px; max-width: 400px;'>
+            <div style='display:inline-block; background-color:#e0f7fa; color:#31708f; padding:8px 40px; border-radius:6px; font-size:12px; max-width: 400px;'>
                 ℹ️ Lower likelihood of heart disease.
             </div>
         </div>
