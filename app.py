@@ -71,12 +71,14 @@ with input_col1:
     st.markdown("### Enter Patient Information")
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
-        # Distribute input fields between the two columns - attempt to balance
+        # Distribute input fields more evenly between the two columns
         if 'Age' in important_features:
             user_inputs['Age'] = st.number_input("Age", 18, 120, 50, key='age_input')
         if 'General_Health_Encoded' in important_features:
              user_inputs['General_Health_Encoded'] = st.selectbox("General Health", [0, 1, 2, 3, 4],
                                       format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x], key='gen_health_input')
+        if 'Male' in important_features:
+            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x, key='gender_input')
         if 'Arthritis_Encoded' in important_features:
             user_inputs['Arthritis_Encoded'] = st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='arthritis_input')
         if 'Diabetes_Encoded' in important_features:
@@ -91,22 +93,19 @@ with input_col1:
             user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
                                                           format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
                                                                                  "Within past 2 years", "Within past year"][x], key='checkup_input')
+        if 'Height_(cm)' in important_features:
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
+        if 'Weight_(kg)' in important_features:
+            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1, key='weight_input')
 
 
         st.markdown('</div>', unsafe_allow_html=True)
 
 
 with input_col2:
-    # Removed the header for the second column
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Continue distributing input fields
-        if 'Male' in important_features:
-            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x, key='gender_input')
-        if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
-        if 'Weight_(kg)' in important_features:
-            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1, key='weight_input')
         if 'BMI' in important_features:
             user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1, key='bmi_input')
         if 'Alcohol_Consumption' in important_features:
