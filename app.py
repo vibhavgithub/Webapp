@@ -55,8 +55,17 @@ important_features = feature_importances_df[feature_importances_df['Importance']
 with left:
     st.markdown("### Enter Patient Information")
     user_inputs = {}
-    # Make the left panel scrollable
-    with st.container(height=600): # Adjust height as needed
+    # Apply custom CSS for scrollable area
+    st.markdown("""
+        <style>
+        .scrollable-container {
+            max-height: 600px; /* Adjust height as needed */
+            overflow-y: auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Only include input fields for important features
         if 'Age' in important_features:
             user_inputs['Age'] = st.number_input("Age", 18, 120, 50)
@@ -105,6 +114,7 @@ with left:
         if 'BMI_Category_Encoded' not in user_inputs and 'BMI_Category_Encoded' in important_features:
             # BMI Category is derived from BMI, this is just to ensure the column is created
             pass # No direct input needed as it's derived from BMI
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
 with right:
