@@ -21,7 +21,7 @@ except FileNotFoundError:
     st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-st.title("## Cardiovascular Disease Prediction")
+st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs (ratio 1), spacer for gap, right for prediction (ratio 3)
 left, gap, right = st.columns([2, 0.5, 3]) # Adjusted ratio and gap
