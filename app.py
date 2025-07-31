@@ -54,7 +54,7 @@ except AttributeError:
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
 with left:
-    st.markdown("#### Enter Patient Information")
+    st.markdown("##### Enter Patient Information")
     user_inputs = {}
     # Apply custom CSS for scrollable area and set max width
     st.markdown("""
