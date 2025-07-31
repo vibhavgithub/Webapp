@@ -55,7 +55,8 @@ important_features = feature_importances_df[feature_importances_df['Importance']
 with left:
     st.markdown("### Enter Patient Information")
     user_inputs = {}
-    with st.container():
+    # Make the left panel scrollable
+    with st.container(height=600): # Adjust height as needed
         # Only include input fields for important features
         if 'Age' in important_features:
             user_inputs['Age'] = st.number_input("Age", 18, 120, 50)
@@ -176,3 +177,7 @@ with right:
             st.warning("Higher likelihood of heart disease.")
         else:
             st.info("Lower likelihood of heart disease.")
+
+    # Add a link to the Data Insights Dashboard below the right panel
+    st.markdown("---") # Add a horizontal rule for separation
+    st.markdown("[Data Insights Dashboard Link](YOUR_DASHBOARD_LINK_HERE)") # Replace YOUR_DASHBOARD_LINK_HERE with the actual link
