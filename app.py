@@ -26,25 +26,29 @@ st.title("Cardiovascular Disease Prediction")
 # Layout: left for inputs, spacer for gap, right for prediction
 left, gap, right = st.columns([3, 0.3, 2])
 
-# Get feature importances (assuming feature_df is available from a previous cell)
-# If not, you would need to load or recalculate it here
-# For this example, I'll assume feature_df is in the environment
-import pandas as pd
-
-# Get feature importances
-importances = best_adaboost_model.feature_importances_
-
-# Combine and sort
-feature_df = pd.DataFrame({
-    "Feature": feature_names,
-    "Importance": importances
-}).sort_values(by="Importance", ascending=False)
-
+# Get feature importances from the loaded model
 try:
-    feature_importances_df = feature_df 
-except NameError:
-    st.error("Feature importances data (feature_df) not found. Please run the cell that calculates feature importances.")
+    importances = model.feature_importances_
+    # Assuming feature_names is available from a previous cell
+    # If not, you would need to define or load it here
+    feature_names = [
+        'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
+        'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
+        'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
+        'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
+        'BMI_Category_Encoded'
+    ]
+    feature_importances_df = pd.DataFrame({
+        "Feature": feature_names,
+        "Importance": importances
+    }).sort_values(by="Importance", ascending=False)
+
+except AttributeError:
+    st.error("Could not get feature importances from the loaded model.")
     st.stop()
+except NameError:
+     st.error("Feature names (feature_names) not found. Please ensure the cell defining feature_names is executed.")
+     st.stop()
 
 
 # Get the features with non-zero importance
