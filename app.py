@@ -71,14 +71,12 @@ with input_col1:
     st.markdown("### Enter Patient Information")
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
-        # Distribute input fields between the two columns - adjust as needed
+        # Distribute input fields between the two columns - attempt to balance
         if 'Age' in important_features:
             user_inputs['Age'] = st.number_input("Age", 18, 120, 50, key='age_input')
         if 'General_Health_Encoded' in important_features:
              user_inputs['General_Health_Encoded'] = st.selectbox("General Health", [0, 1, 2, 3, 4],
                                       format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x], key='gen_health_input')
-        if 'Male' in important_features:
-            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x, key='gender_input')
         if 'Arthritis_Encoded' in important_features:
             user_inputs['Arthritis_Encoded'] = st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='arthritis_input')
         if 'Diabetes_Encoded' in important_features:
@@ -87,10 +85,13 @@ with input_col1:
             user_inputs['Smoking_History_Encoded'] = st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='smoking_input')
         if 'Skin_Cancer_Encoded' in important_features:
             user_inputs['Skin_Cancer_Encoded'] = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='skin_cancer_input')
+        if 'Depression_Encoded' in important_features:
+            user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='depression_input')
         if 'Checkup_Encoded' in important_features:
             user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
                                                           format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
                                                                                  "Within past 2 years", "Within past year"][x], key='checkup_input')
+
 
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -100,8 +101,8 @@ with input_col2:
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
         # Continue distributing input fields
-        if 'Depression_Encoded' in important_features:
-            user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='depression_input')
+        if 'Male' in important_features:
+            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x, key='gender_input')
         if 'Height_(cm)' in important_features:
              user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
         if 'Weight_(kg)' in important_features:
