@@ -18,6 +18,7 @@ st.markdown("""
     /* Main app container */
     .stApp {
         background-color: #e0f2f7; /* Match body background */
+        padding-top: 0 !important; /* Remove top padding from the main app container */
     }
     /* Title styling */
     .stApp > header {
@@ -33,9 +34,10 @@ st.markdown("""
         padding: 0; /* Remove default padding */
         margin-top: -30px; /* Adjust top margin to reduce gap above title */
     }
-    /* Remove top margin from the main content area below the header */
-    .stApp > div:first-child > div:first-child {
+    /* Remove top margin from the main content area below the header - more specific selector */
+    .stApp > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
         margin-top: 0 !important;
+        padding-top: 0 !important;
     }
 
     /* Header styling */
