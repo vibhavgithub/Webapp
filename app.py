@@ -27,13 +27,13 @@ st.title("Cardiovascular Disease Prediction")
 left, gap, right = st.columns([3, 0.3, 2])
 
 # Define feature names - ensuring they match the training data
-feature_names = [
-    'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
-    'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
-    'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
-    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
-    'BMI_Category_Encoded'
-]
+# Using column names from X_train to ensure consistency with the scaler
+try:
+    feature_names = X_train.columns.tolist()
+except NameError:
+    st.error("X_train not found. Please ensure the cell that creates X_train is executed.")
+    st.stop()
+
 
 # Get feature importances from the loaded model
 try:
@@ -130,47 +130,35 @@ with right:
                  else:
                      input_data['BMI_Category_Encoded'] = 0
              else:
-                 # For other features not in user_inputs and not derived, set to 0 or a default value
-                 input_data[feature] = 0 # Or a more appropriate default based on the feature
-
-
-    if st.button("Predict", use_container_width=True):
-        # Create DataFrame with all original features, filling missing important features with their values
-        # and setting non-important features to 0 or a default
-        # Ensure the column names and order match the training data used for the scaler
-        full_input_features = [
-            'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
-            'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
-            'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
-            'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
-            'BMI_Category_Encoded'
-        ]
-
-        user_input_row = {}
-        for feature in full_input_features:
-            if feature in input_data:
-                user_input_row[feature] = input_data[feature]
-            elif feature == 'Female':
-                 user_input_row['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
-            elif feature == 'Male':
-                 user_input_row['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
-            elif feature == 'BMI_Category_Encoded':
-                 bmi_val = user_inputs.get('BMI', 25.0) # Use default if BMI not in important features
-                 if bmi_val < 18.5:
-                     user_input_row['BMI_Category_Encoded'] = 0
-                 elif 18.5 <= bmi_val < 25:
-                     user_input_row['BMI_Category_Encoded'] = 1
-                 elif 25 <= bmi_val < 30:
-                     user_input_row['BMI_Category_Encoded'] = 2
-                 else:
-                     user_input_row['BMI_Category_Encoded'] = 0
-            else:
                 # Set non-important features that are not derived to 0
                 user_input_row[feature] = 0
 
 
-        # Create the DataFrame with the correct column order
-        user_input_df = pd.DataFrame([user_input_row], columns=full_input_features)
+    if st.button("Predict", use_container_width=True):
+        # Create a dictionary with all feature names and their corresponding values
+        # Initialize with default/zero values for all features
+        user_input_row = {feature: 0 for feature in feature_names}
+
+        # Update with user inputs for important features
+        for feature in input_data:
+             user_input_row[feature] = input_data[feature]
+
+        # Handle derived features
+        user_input_row['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
+        user_input_row['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
+        bmi_val = user_inputs.get('BMI', 25.0) # Use default if BMI not in important features
+        if bmi_val < 18.5:
+            user_input_row['BMI_Category_Encoded'] = 0
+        elif 18.5 <= bmi_val < 25:
+            user_input_row['BMI_Category_Encoded'] = 1
+        elif 25 <= bmi_val < 30:
+            user_input_row['BMI_Category_Encoded'] = 2
+        else:
+            user_input_row['BMI_Category_Encoded'] = 0
+
+
+        # Create the DataFrame with the correct column order using feature_names
+        user_input_df = pd.DataFrame([user_input_row], columns=feature_names)
 
 
         # Scale the input
