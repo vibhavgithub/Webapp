@@ -23,8 +23,9 @@ except FileNotFoundError:
 
 st.title("Cardiovascular Disease Prediction")
 
-# Layout: left for inputs (ratio 2), spacer for gap, right for prediction (ratio 3)
-left, gap, right = st.columns([2, 0.3, 3])
+# Layout: left for inputs (ratio 1), spacer for gap, right for prediction (ratio 3)
+left, gap, right = st.columns([1, 0.5, 3]) # Adjusted ratio and gap
+
 
 # Define feature names - ensuring they match the training data
 feature_names = [
@@ -115,7 +116,7 @@ with left:
              user_inputs['Other_Cancer_Encoded'] = st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
         if 'BMI_Category_Encoded' in important_features:
             # BMI Category is derived from BMI, this is just to ensure the column is created
-            pass # No direct input needed as it's derived from BMI
+            pass # No direct input needed as it's derived from 'Male'
         st.markdown('</div>', unsafe_allow_html=True)
 
 
