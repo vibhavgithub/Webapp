@@ -5,24 +5,28 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
-st.markdown("<h1 style='text-align: center;'>🫀 Cardiovascular Disease Prediction</h1>", unsafe_allow_html=True)
-
-# Load model and scaler
+# Load the trained model
 try:
     with open('best_adaboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
-    st.error("Model file not found.")
+    st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
+# Load the scaler
 try:
     with open('scaler.pkl', 'rb') as f:
         scaler = pickle.load(f)
 except FileNotFoundError:
-    st.error("Scaler file not found.")
+    st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
-# Feature names
+st.title("Cardiovascular Disease Prediction")
+
+# Layout: left for inputs, spacer for gap, right for prediction
+left, gap, right = st.columns([3, 0.3, 2])
+
+# Define feature names - ensuring they match the training data
 feature_names = [
     'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
     'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
@@ -31,125 +35,159 @@ feature_names = [
     'BMI_Category_Encoded'
 ]
 
-# Get feature importances
+
+# Get feature importances from the loaded model
 try:
     importances = model.feature_importances_
     feature_importances_df = pd.DataFrame({
         "Feature": feature_names,
         "Importance": importances
     }).sort_values(by="Importance", ascending=False)
+
 except AttributeError:
-    st.error("Could not read feature importances.")
+    st.error("Could not get feature importances from the loaded model.")
     st.stop()
 
+
+# Get the features with non-zero importance
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
-st.markdown("### 📝 Enter Patient Information")
-user_inputs = {}
+with left:
+    st.markdown("### Enter Patient Information")
+    user_inputs = {}
+    # Apply custom CSS for scrollable area
+    st.markdown("""
+        <style>
+        .scrollable-container {
+            max-height: 600px; /* Adjust height as needed */
+            overflow-y: auto;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    with st.container():
+        st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
+        # Only include input fields for important features
+        if 'Age' in important_features:
+            user_inputs['Age'] = st.number_input("Age", 18, 120, 50)
+        if 'General_Health_Encoded' in important_features:
+             user_inputs['General_Health_Encoded'] = st.selectbox("General Health", [0, 1, 2, 3, 4],
+                                      format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x])
+        if 'Male' in important_features:
+            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x)
+        if 'Arthritis_Encoded' in important_features:
+            user_inputs['Arthritis_Encoded'] = st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'Diabetes_Encoded' in important_features:
+            user_inputs['Diabetes_Encoded'] = st.selectbox("Diabetes", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'Female' in important_features:
+            # Gender is handled by 'Male' input, this is just to ensure the column is created
+            pass # No direct input needed as it's derived from 'Male'
+        if 'Smoking_History_Encoded' in important_features:
+            user_inputs['Smoking_History_Encoded'] = st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'Skin_Cancer_Encoded' in important_features:
+            user_inputs['Skin_Cancer_Encoded'] = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'Checkup_Encoded' in important_features:
+            user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
+                               format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
+                                                      "Within past 2 years", "Within past year"][x])
+        if 'Depression_Encoded' in important_features:
+            user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x])
 
-# Create compact vertical layout using repeated columns
-fields = []
+        # Include other inputs that might not have importance but are needed for the model (like BMI calculation)
+        if 'Height_(cm)' not in user_inputs and 'Height_(cm)' in important_features:
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170)
+        if 'Weight_(kg)' not in user_inputs and 'Weight_(kg)' in important_features:
+            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
+        if 'BMI' not in user_inputs and 'BMI' in important_features:
+            user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
+        if 'Alcohol_Consumption' not in user_inputs and 'Alcohol_Consumption' in important_features:
+            user_inputs['Alcohol_Consumption'] = st.number_input("Alcohol Consumption (drinks/week)", 0, 100, 0)
+        if 'Fruit_Consumption' not in user_inputs and 'Fruit_Consumption' in important_features:
+            user_inputs['Fruit_Consumption'] = st.number_input("Fruit Consumption (servings/day)", 0, 100, 30)
+        if 'Green_Vegetables_Consumption' not in user_inputs and 'Green_Vegetables_Consumption' in important_features:
+             user_inputs['Green_Vegetables_Consumption'] = st.number_input("Green Vegetables (servings/day)", 0, 100, 30)
+        if 'FriedPotato_Consumption' not in user_inputs and 'FriedPotato_Consumption' in important_features:
+            user_inputs['FriedPotato_Consumption'] = st.number_input("Fried Potato (servings/week)", 0, 100, 0)
+        if 'Exercise_Encoded' not in user_inputs and 'Exercise_Encoded' in important_features:
+            user_inputs['Exercise_Encoded'] = st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'Other_Cancer_Encoded' not in user_inputs and 'Other_Cancer_Encoded' in important_features:
+             user_inputs['Other_Cancer_Encoded'] = st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+        if 'BMI_Category_Encoded' not in user_inputs and 'BMI_Category_Encoded' in important_features:
+            # BMI Category is derived from BMI, this is just to ensure the column is created
+            pass # No direct input needed as it's derived from BMI
+        st.markdown('</div>', unsafe_allow_html=True)
 
-if 'Age' in important_features:
-    fields.append(('Age', st.number_input("Age", 18, 120, 50, key='age')))
 
-if 'General_Health_Encoded' in important_features:
-    fields.append(('General_Health_Encoded', st.selectbox("General Health", [0, 1, 2, 3, 4],
-        format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x], key='gh')))
+with right:
+    st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
-if 'Male' in important_features:
-    fields.append(('Male', st.selectbox("Gender", ["Female", "Male"], key='gender')))
-
-if 'Arthritis_Encoded' in important_features:
-    fields.append(('Arthritis_Encoded', st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='arth')))
-
-if 'Diabetes_Encoded' in important_features:
-    fields.append(('Diabetes_Encoded', st.selectbox("Diabetes", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='diab')))
-
-if 'Smoking_History_Encoded' in important_features:
-    fields.append(('Smoking_History_Encoded', st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='smk')))
-
-if 'Skin_Cancer_Encoded' in important_features:
-    fields.append(('Skin_Cancer_Encoded', st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='sc')))
-
-if 'Checkup_Encoded' in important_features:
-    fields.append(('Checkup_Encoded', st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
-        format_func=lambda x: ["Never", "5+ years ago", "Within 5 years", "Within 2 years", "Within 1 year"][x], key='chk')))
-
-if 'Depression_Encoded' in important_features:
-    fields.append(('Depression_Encoded', st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='dep')))
-
-if 'Height_(cm)' in important_features:
-    fields.append(('Height_(cm)', st.number_input("Height (cm)", 50, 300, 170, key='ht')))
-
-if 'Weight_(kg)' in important_features:
-    fields.append(('Weight_(kg)', st.number_input("Weight (kg)", 10.0, 500.0, 70.0, step=0.1, key='wt')))
-
-if 'BMI' in important_features:
-    fields.append(('BMI', st.number_input("BMI", 10.0, 100.0, 25.0, step=0.1, key='bmi')))
-
-if 'Alcohol_Consumption' in important_features:
-    fields.append(('Alcohol_Consumption', st.number_input("Alcohol (drinks/week)", 0, 100, 0, key='alc')))
-
-if 'Fruit_Consumption' in important_features:
-    fields.append(('Fruit_Consumption', st.number_input("Fruits/day", 0, 100, 30, key='fru')))
-
-if 'Green_Vegetables_Consumption' in important_features:
-    fields.append(('Green_Vegetables_Consumption', st.number_input("Green Veg/day", 0, 100, 30, key='veg')))
-
-if 'FriedPotato_Consumption' in important_features:
-    fields.append(('FriedPotato_Consumption', st.number_input("Fried Potato/week", 0, 100, 0, key='fp')))
-
-if 'Exercise_Encoded' in important_features:
-    fields.append(('Exercise_Encoded', st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='exe')))
-
-if 'Other_Cancer_Encoded' in important_features:
-    fields.append(('Other_Cancer_Encoded', st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='oc')))
-
-for key, value in fields:
-    user_inputs[key] = value
-
-# --- Prediction Section ---
-st.markdown("### 🧪 Prediction Result")
-
-# Handle derived fields
-input_data = {}
-for feature in important_features:
-    if feature in user_inputs:
-        input_data[feature] = user_inputs[feature]
-    elif feature == 'Female':
-        input_data['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
-    elif feature == 'Male':
-        input_data['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
-    elif feature == 'BMI_Category_Encoded':
-        bmi = user_inputs.get('BMI', 25.0)
-        if bmi < 18.5:
-            input_data['BMI_Category_Encoded'] = 0
-        elif 18.5 <= bmi < 25:
-            input_data['BMI_Category_Encoded'] = 1
-        elif 25 <= bmi < 30:
-            input_data['BMI_Category_Encoded'] = 2
+    # Prepare input data based on user_inputs dictionary
+    input_data = {}
+    for feature in important_features:
+        if feature in user_inputs:
+            input_data[feature] = user_inputs[feature]
         else:
-            input_data['BMI_Category_Encoded'] = 0
-    else:
-        input_data[feature] = 0
+             # Handle features that are not directly input but needed for the model
+             if feature == 'Female':
+                 input_data['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
+             elif feature == 'Male':
+                 input_data['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
+             elif feature == 'BMI_Category_Encoded':
+                 bmi_val = user_inputs.get('BMI', 25.0) # Use default if BMI not in important features
+                 if bmi_val < 18.5:
+                     input_data['BMI_Category_Encoded'] = 0
+                 elif 18.5 <= bmi_val < 25:
+                     input_data['BMI_Category_Encoded'] = 1
+                 elif 25 <= bmi_val < 30:
+                     input_data['BMI_Category_Encoded'] = 2
+                 else:
+                     input_data['BMI_Category_Encoded'] = 0
+             else:
+                # Set non-important features that are not derived to 0
+                user_input_row[feature] = 0
 
-if st.button("Predict", use_container_width=True):
-    user_input_row = {f: 0 for f in feature_names}
-    for f in input_data:
-        user_input_row[f] = input_data[f]
 
-    user_input_df = pd.DataFrame([user_input_row], columns=feature_names)
-    user_input_scaled = scaler.transform(user_input_df)
-    prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
-    percentage = prediction_proba[0] * 100
+    if st.button("Predict", use_container_width=True):
+        # Create a dictionary with all feature names and their corresponding values
+        # Initialize with default/zero values for all features
+        user_input_row = {feature: 0 for feature in feature_names}
 
-    st.markdown(f"<h4 style='text-align: center;'>Heart Disease Risk: {percentage:.2f}%</h4>", unsafe_allow_html=True)
-    if percentage > 50:
-        st.warning("⚠️ Higher likelihood of heart disease.")
-    else:
-        st.success("✅ Lower likelihood of heart disease.")
+        # Update with user inputs for important features
+        for feature in input_data:
+             user_input_row[feature] = input_data[feature]
 
-# --- Dashboard Link ---
-st.markdown("### 📊 Data Insights Dashboard")
-st.markdown("[Go to Dashboard ➡️](YOUR_DASHBOARD_LINK_HERE)")
+        # Handle derived features
+        user_input_row['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
+        user_input_row['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
+        bmi_val = user_inputs.get('BMI', 25.0) # Use default if BMI not in important features
+        if bmi_val < 18.5:
+            user_input_row['BMI_Category_Encoded'] = 0
+        elif 18.5 <= bmi_val < 25:
+            user_input_row['BMI_Category_Encoded'] = 1
+        elif 25 <= bmi_val < 30:
+            user_input_row['BMI_Category_Encoded'] = 2
+        else:
+            user_input_row['BMI_Category_Encoded'] = 0
+
+
+        # Create the DataFrame with the correct column order using feature_names
+        user_input_df = pd.DataFrame([user_input_row], columns=feature_names)
+
+
+        # Scale the input
+        user_input_scaled = scaler.transform(user_input_df)
+
+        # Make prediction
+        prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
+        st.write(
+            f"<div style='text-align: center; font-size: 18px; font-weight: bold;'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+            unsafe_allow_html=True
+        )
+
+        if prediction_proba[0] > 0.5:
+            st.warning("Higher likelihood of heart disease.")
+        else:
+            st.info("Lower likelihood of heart disease.")
+
+    # Add a link to the Data Insights Dashboard below the right panel
+    st.markdown("---") # Add a horizontal rule for separation
+    st.markdown("[Data Insights Dashboard Link](YOUR_DASHBOARD_LINK_HERE)") # Replace YOUR_DASHBOARD_LINK_HERE with the actual link
