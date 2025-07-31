@@ -24,13 +24,14 @@ st.markdown("""
         background-color: #007ac1; /* Darker blue for header */
         padding: 15px;
         border-bottom: 2px solid #005b9f; /* Add a bottom border */
+        margin-bottom: 0; /* Remove bottom margin from header */
     }
     .stApp > header h1 {
         color: white; /* White text for title */
         text-align: center;
         margin: 0; /* Remove default margin */
         padding: 0; /* Remove default padding */
-        margin-top: -30px; /* Adjust top margin to reduce gap */
+        margin-top: -30px; /* Adjust top margin to reduce gap above title */
     }
     /* Header styling */
     h1, h2, h3, h4, h5, h6 {
