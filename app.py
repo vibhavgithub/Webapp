@@ -23,8 +23,8 @@ except FileNotFoundError:
 
 st.title("Cardiovascular Disease Prediction")
 
-# Layout: left for inputs (ratio 1), spacer for gap, right for prediction (ratio 3)
-left, gap, right = st.columns([1, 0.5, 3]) # Adjusted ratio and gap
+# Layout: left inputs (two columns, ratio 1:1), spacer for gap, right prediction (ratio 2)
+input_col1, input_col2, gap, right = st.columns([1, 1, 0.3, 2]) # Adjusted ratio for three main sections (two input, one prediction)
 
 
 # Define feature names - ensuring they match the training data
@@ -53,70 +53,81 @@ except AttributeError:
 # Get the features with non-zero importance
 important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
 
-with left:
-    st.markdown("##### Enter Patient Information")
-    user_inputs = {}
-    # Apply custom CSS for scrollable area and set max width
-    st.markdown("""
-        <style>
-        .scrollable-container {
-            max-height: 600px; /* Adjust height as needed */
-            overflow-y: auto;
-            padding-right: 15px; /* Add some padding to the right for the scrollbar */
-        }
-        </style>
-    """, unsafe_allow_html=True)
+# Apply custom CSS for scrollable area
+st.markdown("""
+    <style>
+    .scrollable-container {
+        max-height: 600px; /* Adjust height as needed */
+        overflow-y: auto;
+        padding-right: 15px; /* Add some padding to the right for the scrollbar */
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+user_inputs = {}
+
+# Place input fields in the two left columns
+with input_col1:
+    st.markdown("### Enter Patient Information (Part 1)")
     with st.container():
         st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
-        # Only include input fields for important features
+        # Distribute input fields between the two columns - adjust as needed
         if 'Age' in important_features:
-            user_inputs['Age'] = st.number_input("Age", 18, 120, 50)
+            user_inputs['Age'] = st.number_input("Age", 18, 120, 50, key='age_input')
         if 'General_Health_Encoded' in important_features:
              user_inputs['General_Health_Encoded'] = st.selectbox("General Health", [0, 1, 2, 3, 4],
-                                      format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x])
+                                      format_func=lambda x: ["Poor", "Fair", "Good", "Very Good", "Excellent"][x], key='gen_health_input')
         if 'Male' in important_features:
-            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x)
+            user_inputs['Male'] = st.selectbox("Gender", ["Female", "Male"], format_func=lambda x: x, key='gender_input')
         if 'Arthritis_Encoded' in important_features:
-            user_inputs['Arthritis_Encoded'] = st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+            user_inputs['Arthritis_Encoded'] = st.selectbox("Arthritis", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='arthritis_input')
         if 'Diabetes_Encoded' in important_features:
-            user_inputs['Diabetes_Encoded'] = st.selectbox("Diabetes", [0, 1], format_func=lambda x: ["No", "Yes"][x])
-        if 'Female' in important_features:
-            # Gender is handled by 'Male' input, this is just to ensure the column is created
-            pass # No direct input needed as it's derived from 'Male'
+            user_inputs['Diabetes_Encoded'] = st.selectbox("Diabetes", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='diabetes_input')
         if 'Smoking_History_Encoded' in important_features:
-            user_inputs['Smoking_History_Encoded'] = st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+            user_inputs['Smoking_History_Encoded'] = st.selectbox("Smoking History", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='smoking_input')
         if 'Skin_Cancer_Encoded' in important_features:
-            user_inputs['Skin_Cancer_Encoded'] = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+            user_inputs['Skin_Cancer_Encoded'] = st.selectbox("Skin Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='skin_cancer_input')
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+
+with input_col2:
+    st.markdown("### Enter Patient Information (Part 2)")
+    with st.container():
+        st.markdown('<div class="scrollable-container">', unsafe_allow_html=True)
+        # Continue distributing input fields
         if 'Checkup_Encoded' in important_features:
             user_inputs['Checkup_Encoded'] = st.selectbox("Last Checkup", [0, 1, 2, 3, 4],
                                                           format_func=lambda x: ["Never", "5+ years ago", "Within past 5 years",
-                                                                                 "Within past 2 years", "Within past year"][x])
+                                                                                 "Within past 2 years", "Within past year"][x], key='checkup_input')
         if 'Depression_Encoded' in important_features:
-            user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x])
-
-        # Include other inputs that might not have importance but are needed for the model (like BMI calculation)
-        # Ensure these are included if they are in important_features, even if not directly used for filtering inputs
+            user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='depression_input')
         if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0)
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0, key='height_input')
         if 'Weight_(kg)' in important_features:
-            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
+            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1, key='weight_input')
         if 'BMI' in important_features:
-            user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
+            user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1, key='bmi_input')
         if 'Alcohol_Consumption' in important_features:
-            user_inputs['Alcohol_Consumption'] = st.number_input("Alcohol Consumption (drinks/week)", 0, 100, 0)
+            user_inputs['Alcohol_Consumption'] = st.number_input("Alcohol Consumption (drinks/week)", 0, 100, 0, key='alcohol_input')
         if 'Fruit_Consumption' in important_features:
-            user_inputs['Fruit_Consumption'] = st.number_input("Fruit Consumption (servings/day)", 0, 100, 30)
+            user_inputs['Fruit_Consumption'] = st.number_input("Fruit Consumption (servings/day)", 0, 100, 30, key='fruit_input')
         if 'Green_Vegetables_Consumption' in important_features:
-             user_inputs['Green_Vegetables_Consumption'] = st.number_input("Green Vegetables (servings/day)", 0, 100, 30)
+             user_inputs['Green_Vegetables_Consumption'] = st.number_input("Green Vegetables (servings/day)", 0, 100, 30, key='green_veg_input')
         if 'FriedPotato_Consumption' in important_features:
-            user_inputs['FriedPotato_Consumption'] = st.number_input("Fried Potato (servings/week)", 0, 100, 0)
+            user_inputs['FriedPotato_Consumption'] = st.number_input("Fried Potato (servings/week)", 0, 100, 0, key='fried_potato_input')
         if 'Exercise_Encoded' in important_features:
-            user_inputs['Exercise_Encoded'] = st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+            user_inputs['Exercise_Encoded'] = st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='exercise_input')
         if 'Other_Cancer_Encoded' in important_features:
-             user_inputs['Other_Cancer_Encoded'] = st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x])
+             user_inputs['Other_Cancer_Encoded'] = st.selectbox("Other Cancer", [0, 1], format_func=lambda x: ["No", "Yes"][x], key='other_cancer_input')
+        if 'Female' in important_features:
+            # Gender is handled by 'Male' input, this is just to ensure the column is created
+            pass # No direct input needed as it's derived from 'Male'
         if 'BMI_Category_Encoded' in important_features:
             # BMI Category is derived from BMI, this is just to ensure the column is created
-            pass # No direct input needed as it's derived from 'Male'
+            pass # No direct input needed as it's derived from BMI
+
+
         st.markdown('</div>', unsafe_allow_html=True)
 
 
