@@ -26,18 +26,18 @@ st.title("Cardiovascular Disease Prediction")
 # Layout: left for inputs, spacer for gap, right for prediction
 left, gap, right = st.columns([3, 0.3, 2])
 
+# Define feature names - ensuring they match the training data
+feature_names = [
+    'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
+    'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
+    'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
+    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
+    'BMI_Category_Encoded'
+]
+
 # Get feature importances from the loaded model
 try:
     importances = model.feature_importances_
-    # Assuming feature_names is available from a previous cell
-    # If not, you would need to define or load it here
-    feature_names = [
-        'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
-        'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
-        'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
-        'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
-        'BMI_Category_Encoded'
-    ]
     feature_importances_df = pd.DataFrame({
         "Feature": feature_names,
         "Importance": importances
@@ -46,9 +46,6 @@ try:
 except AttributeError:
     st.error("Could not get feature importances from the loaded model.")
     st.stop()
-except NameError:
-     st.error("Feature names (feature_names) not found. Please ensure the cell defining feature_names is executed.")
-     st.stop()
 
 
 # Get the features with non-zero importance
@@ -140,6 +137,7 @@ with right:
     if st.button("Predict", use_container_width=True):
         # Create DataFrame with all original features, filling missing important features with their values
         # and setting non-important features to 0 or a default
+        # Ensure the column names and order match the training data used for the scaler
         full_input_features = [
             'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
             'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
@@ -171,7 +169,8 @@ with right:
                 user_input_row[feature] = 0
 
 
-        user_input_df = pd.DataFrame([user_input_row])
+        # Create the DataFrame with the correct column order
+        user_input_df = pd.DataFrame([user_input_row], columns=full_input_features)
 
 
         # Scale the input
