@@ -67,12 +67,20 @@ with right:
         bmi_category = 0
 
     if st.button("Predict", use_container_width=True):
+        input_features = [
+            'height', 'weight', 'bmi', 'alcohol_consumption', 'fruit_consumption',
+            'green_vegetables_consumption', 'fried_potato_consumption', 'age',
+            'checkup', 'general_health', 'exercise', 'skin_cancer', 'other_cancer',
+            'depression', 'arthritis', 'diabetes', 'smoking_history', 'female', 'male',
+            'bmi_category'
+        ]
+      
         user_input = pd.DataFrame([[height, weight, bmi, alcohol_consumption, fruit_consumption,
                                     green_vegetables_consumption, fried_potato_consumption, age,
                                     checkup, general_health, exercise, skin_cancer, other_cancer,
                                     depression, arthritis, diabetes, smoking_history, female, male,
                                     bmi_category]],
-                                  columns=model.feature_names_in_)
+                                  columns=input_features)
 
         # Scale the input
         user_input_scaled = scaler.transform(user_input)
