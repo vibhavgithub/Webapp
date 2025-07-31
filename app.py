@@ -147,8 +147,9 @@ with right:
         # Make prediction
         prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
         st.markdown(
-            f"<div class='prediction-text'>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
+            f"<div class='prediction-text'; style='text-align: center; font-size: 22px; font-weight: bold; color: white;>Probability of Heart Disease: {prediction_proba[0]*100:.2f}%</div>",
             unsafe_allow_html=True
+            
         )
 
         if prediction_proba[0] > 0.5:
