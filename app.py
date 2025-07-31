@@ -96,7 +96,7 @@ with left:
         # Include other inputs that might not have importance but are needed for the model (like BMI calculation)
         # Ensure these are included if they are in important_features, even if not directly used for filtering inputs
         if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170)
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0)
         if 'Weight_(kg)' in important_features:
             user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
         if 'BMI' in important_features:
@@ -123,36 +123,31 @@ with right:
     st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold;'>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
-    input_data = {}
-    # Include all features in input_data, whether they were explicitly asked for or derived
-    all_features_input = {}
-    for feature in feature_names:
-        if feature in user_inputs:
-            all_features_input[feature] = user_inputs[feature]
-        else:
-            # Handle derived features or set default for those not in user_inputs
-            if feature == 'Female':
-                all_features_input['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
-            elif feature == 'Male':
-                all_features_input['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
-            elif feature == 'BMI_Category_Encoded':
-                bmi_val = user_inputs.get('BMI', 25.0) # Use default if BMI not in user_inputs
-                if bmi_val < 18.5:
-                    all_features_input['BMI_Category_Encoded'] = 0
-                elif 18.5 <= bmi_val < 25:
-                    all_features_input['BMI_Category_Encoded'] = 1
-                elif 25 <= bmi_val < 30:
-                    all_features_input['BMI_Category_Encoded'] = 2
-                else:
-                    all_features_input['BMI_Category_Encoded'] = 0
-            else:
-                # For any other feature not in user_inputs and not explicitly handled, set to 0 or a default
-                all_features_input[feature] = 0 # Or a more appropriate default based on the feature
+    # Initialize a dictionary with default values for all features
+    user_input_data = {feature: 0 for feature in feature_names}
+
+    # Update with user inputs for important features
+    for feature, value in user_inputs.items():
+        user_input_data[feature] = value
+
+    # Handle derived features (Gender and BMI Category)
+    user_input_data['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
+    user_input_data['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
+
+    bmi_val = user_inputs.get('BMI', 25.0)
+    if bmi_val < 18.5:
+        user_input_data['BMI_Category_Encoded'] = 0
+    elif 18.5 <= bmi_val < 25:
+        user_input_data['BMI_Category_Encoded'] = 1
+    elif 25 <= bmi_val < 30:
+        user_input_data['BMI_Category_Encoded'] = 2
+    else:
+        user_input_data['BMI_Category_Encoded'] = 0
 
 
     if st.button("Predict", use_container_width=True):
         # Create the DataFrame with the correct column order using feature_names
-        user_input_df = pd.DataFrame([all_features_input], columns=feature_names)
+        user_input_df = pd.DataFrame([user_input_data], columns=feature_names)
 
 
         # Scale the input
