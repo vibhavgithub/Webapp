@@ -27,12 +27,13 @@ st.title("Cardiovascular Disease Prediction")
 left, gap, right = st.columns([3, 0.3, 2])
 
 # Define feature names - ensuring they match the training data
-# Using column names from X_train to ensure consistency with the scaler
-try:
-    feature_names = X_train.columns.tolist()
-except NameError:
-    st.error("X_train not found. Please ensure the cell that creates X_train is executed.")
-    st.stop()
+feature_names = [
+    'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
+    'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
+    'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
+    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
+    'BMI_Category_Encoded'
+]
 
 
 # Get feature importances from the loaded model
