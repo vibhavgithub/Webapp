@@ -210,7 +210,7 @@ with left:
 
 with right:
     # Apply centering to the content within the right column
-    st.markdown("<div style='font-size: 22px; font-weight: bold; class='centered-content';>Prediction Result</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size: 22px; font-weight: bold;>Prediction Result</div>", unsafe_allow_html=True)
 
     # Prepare input data based on user_inputs dictionary
     # Initialize a dictionary with default values for all features
