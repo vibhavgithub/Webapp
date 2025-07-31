@@ -26,23 +26,23 @@ st.markdown("""
         padding: 15px;
         border-bottom: 2px solid #005b9f; /* Add a bottom border */
         margin-bottom: 0 !important; /* Remove bottom margin from header, using !important for override */
+        padding-bottom: 0 !important; /* Also remove bottom padding from header */
     }
     .stApp > header h1 {
         color: white; /* White text for title */
         text-align: center;
-        margin: 0; /* Remove default margin */
-        padding: 0; /* Remove default padding */
-        margin-top: -30px; /* Adjust top margin to reduce gap above title */
-        margin-bottom: 0 !important; /* Tighten up space below title */
+        margin: 0 !important; /* Remove all margins from h1 */
+        padding: 0 !important; /* Remove all paddings from h1 */
     }
-    /* Remove top margin from the main content area below the header - more specific selector */
-    .stApp > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+    /* Remove top margin/padding from the main content area below the header - targeting more potential elements */
+    .stApp > div:nth-child(1) > div:nth-child(1) > div:nth-child(1),
+    .stApp > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div {
         margin-top: 0 !important;
         padding-top: 0 !important;
     }
 
-    /* Header styling */
-    h1, h2, h3, h4, h5, h6 {
+    /* Header styling for other headers within the app */
+    h2, h3, h4, h5, h6 {
         color: #004d80; /* Dark blue for headers */
         margin-top: 1.5rem; /* Add space above headers */
         margin-bottom: 1rem; /* Add space below headers */
@@ -139,7 +139,7 @@ feature_names = [
     'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
     'Green_Vegetables_Consumption', 'FriedPotato_Consumption', 'Age',
     'Checkup_Encoded', 'General_Health_Encoded', 'Exercise_Encoded', 'Skin_Cancer_Encoded', 'Other_Cancer_Encoded',
-    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
+    'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', Smoking_History_Encoded', 'Female', 'Male',
     'BMI_Category_Encoded'
 ]
 
