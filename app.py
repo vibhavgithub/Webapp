@@ -88,8 +88,11 @@ with left:
              user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=100.0, max_value=250.0, value=170.0)
         if 'Weight_(kg)' in important_features:
             user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=30.0, max_value=150.0, value=70.0, step=0.1)
-        if 'BMI' in important_features:
-            user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
+        if 'Height_(cm)' in important_features and 'Weight_(kg)' in important_features:
+            height_cm = user_inputs.get('Height_(cm)', 170.0)
+            weight_kg = user_inputs.get('Weight_(kg)', 70.0)
+            bmi = weight_kg / ((height_cm / 100) ** 2)
+            user_inputs['BMI'] = round(bmi, 2)
         if 'Alcohol_Consumption' in important_features:
             user_inputs['Alcohol_Consumption'] = st.number_input("Alcohol Consumption (drinks/week)", 0, 100, 0)
         if 'Fruit_Consumption' in important_features:
