@@ -10,7 +10,7 @@ try:
     with open('best_catboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
-    st.error("Model file 'best_catboost_model.pkl' not found. Please ensure it's in the same directory.")
+    st.error("Model file not found. Please ensure it's in the same directory.")
     st.stop()
 
 # Load the scaler
