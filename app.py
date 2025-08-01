@@ -85,7 +85,7 @@ with left:
             user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x])
 
         if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=100, max_value=250, value=170.0)
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=100.0, max_value=250.0, value=170.0)
         if 'Weight_(kg)' in important_features:
             user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=30.0, max_value=150.0, value=70.0, step=0.1)
         if 'BMI' in important_features:
