@@ -7,10 +7,10 @@ st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction"
 
 # Load the trained model
 try:
-    with open('best_catboost_model.pkl', 'rb') as f:
+    with open('best_adaboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
-    st.error("Model file 'best_catboost_model.pkl' not found. Please ensure it's in the same directory.")
+    st.error("Model file 'best_adaboost_model.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
 # Load the scaler
@@ -84,12 +84,10 @@ with left:
         if 'Depression_Encoded' in important_features:
             user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x])
 
-        # Include other inputs that might not have importance but are needed for the model (like BMI calculation)
-        # Ensure these are included if they are in important_features, even if not directly used for filtering inputs
         if 'Height_(cm)' in important_features:
-             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=50, max_value=300, value=170.0)
+             user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=100, max_value=250, value=170.0)
         if 'Weight_(kg)' in important_features:
-            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=10.0, max_value=500.0, value=70.0, step=0.1)
+            user_inputs['Weight_(kg)'] = st.number_input("Weight (kg)", min_value=30.0, max_value=150.0, value=70.0, step=0.1)
         if 'BMI' in important_features:
             user_inputs['BMI'] = st.number_input("BMI", min_value=10.0, max_value=100.0, value=25.0, step=0.1)
         if 'Alcohol_Consumption' in important_features:
@@ -153,7 +151,7 @@ with right:
     </div>
     """,
     unsafe_allow_html=True
-            
+
         )
 
         if prediction_proba[0] > 0.5:
