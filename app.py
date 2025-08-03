@@ -7,7 +7,7 @@ st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction"
 
 # Load the trained model
 try:
-    with open('best_xgboost_model.pkl', 'rb') as f:
+    with open('best_catboost_model.pkl', 'rb') as f:
         model = pickle.load(f)
 except FileNotFoundError:
     st.error("Model file not found. Please ensure it's in the same directory.")
@@ -173,6 +173,7 @@ with right:
         "</div></div>",
         unsafe_allow_html=True
     )
+
 
 
 
