@@ -99,7 +99,7 @@ if st.session_state["page"] == "Home":
             st.session_state["page"] = "View Dashboard"
 
 
-elif st.session_state["page"] == "View Dashboard":
+if st.session_state["page"] == "View Dashboard":
     st.markdown("<style>#dashboard-container { max-width: 100%; }</style>", unsafe_allow_html=True)
     st.subheader("Interactive Tableau Dashboard")
     with st.spinner("Loading Dashboard..."):
@@ -110,7 +110,7 @@ elif st.session_state["page"] == "View Dashboard":
         if st.button("Back to Home"):
             st.session_state["page"] = "Home"
 
-elif st.session_state["page"] == "Heart Disease Prediction":
+if st.session_state["page"] == "Heart Disease Prediction":
 
     # Load the trained model
     try:
@@ -349,6 +349,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
