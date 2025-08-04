@@ -112,8 +112,8 @@ elif st.session_state["page"] == "View Dashboard":
     with st.spinner("Loading Dashboard..."):
         time.sleep(2)
     show_tableau_dashboard()
-    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])  
-    with col4:
+    col1, col2, col3= st.columns([1, 1, 1])  
+    with col2:
         def go_home():
             st.session_state["page"] = "Home"
             st.experimental_rerun()
@@ -365,6 +365,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             go_home()
     
     
+
 
 
 
