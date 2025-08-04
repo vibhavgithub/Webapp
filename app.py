@@ -90,7 +90,7 @@ if st.session_state["page"] == "Home":
         </div>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns([2,1,2])
+    col1, col2, col3 = st.columns([1,1,1])
     with col1:
         if st.button("Predict Heart Disease ❤️", use_container_width=True):
             st.session_state["page"] = "Heart Disease Prediction"
@@ -347,8 +347,17 @@ elif st.session_state["page"] == "Heart Disease Prediction":
         )
         if st.button("Back to Home", use_container_width=True):
             st.session_state["page"] = "Home"
+            st.markdown(
+                 f"""
+        <div class='prediction-text' style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>
+        </div>
+        """,
+        unsafe_allow_html=True
+    
+            )
     
     
+
 
 
 
