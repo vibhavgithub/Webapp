@@ -21,6 +21,72 @@ except FileNotFoundError:
     st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
     st.stop()
 
+st.markdown("""
+    <style>
+        /* Main background */
+        .stApp {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        /* Scrollable input section */
+        .scrollable-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Input fields */
+        .stNumberInput > div > input, .stSelectbox > div > div {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+        }
+
+        /* Styled button */
+        div.stButton > button {
+            background-color: #00c9a7;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            border: none;
+            padding: 0.5rem 1rem;
+        }
+
+        div.stButton > button:hover {
+            background-color: #00b49f;
+        }
+
+        /* Prediction result box */
+        .prediction-text {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .stAlert {
+            margin-top: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        /* Custom title styling */
+        .main-title {
+            font-size: 36px;
+            font-weight: 700;
+            background: -webkit-linear-gradient(45deg, #7F00FF, #E100FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("Cardiovascular Disease Prediction")
 
 # Layout: left for inputs, spacer for gap, right for prediction
@@ -173,6 +239,7 @@ with right:
         "</div></div>",
         unsafe_allow_html=True
     )
+
 
 
 
