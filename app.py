@@ -99,7 +99,7 @@ if st.session_state["page"] == "Home":
     st.markdown("""
         <div style=" display: flex; justify-content: center; align-items: center; height: 40vh; text-align: center;">
             <div>
-                <h1>Welcome to Google Playstore Prediction Application</h1>
+                <h1>Welcome to Cardiovascular Disease Prediction Application</h1>
                 <p>Choose an option below to proceed</p>
             </div>
         </div>
@@ -365,6 +365,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
