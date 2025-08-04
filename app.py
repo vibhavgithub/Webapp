@@ -92,11 +92,18 @@ if st.session_state["page"] == "Home":
     
     col1, col2, col3 = st.columns([1,1,1])
     with col1:
-        if st.button("Predict Heart Disease ❤️", use_container_width=True):
+        def go_to_prediction():
             st.session_state["page"] = "Heart Disease Prediction"
+            st.experimental_rerun()
+        if st.button("Predict Heart Disease ❤️", use_container_width=True):
+            go_to_prediction()
     with col3:
-        if st.button("View Dashboard 📊", use_container_width=True):
+        def go_to_dashboard():
             st.session_state["page"] = "View Dashboard"
+            st.experimental_rerun()
+
+        if st.button("View Dashboard 📊", use_container_width=True):
+            go_to_dashboard()
 
 
 elif st.session_state["page"] == "View Dashboard":
@@ -107,8 +114,13 @@ elif st.session_state["page"] == "View Dashboard":
     show_tableau_dashboard()
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])  
     with col4:
-        if st.button("Back to Home"):
+        def go_home():
             st.session_state["page"] = "Home"
+            st.experimental_rerun()
+
+        if st.button("Back to Home", use_container_width=True):
+            go_home()
+
 
 elif st.session_state["page"] == "Heart Disease Prediction":
 
@@ -345,10 +357,15 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             "</div></div>",
             unsafe_allow_html=True
         )
-        if st.button("Back to Home", use_container_width=True):
+        def go_home():
             st.session_state["page"] = "Home"
+            st.experimental_rerun()
+
+        if st.button("Back to Home", use_container_width=True):
+            go_home()
     
     
+
 
 
 
