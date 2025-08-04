@@ -347,16 +347,9 @@ elif st.session_state["page"] == "Heart Disease Prediction":
         )
         if st.button("Back to Home", use_container_width=True):
             st.session_state["page"] = "Home"
-            st.markdown(
-                 f"""
-        <div class='prediction-text' style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>
-        </div>
-        """,
-        unsafe_allow_html=True
-    
-            )
     
     
+
 
 
 
