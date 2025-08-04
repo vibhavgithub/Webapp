@@ -6,7 +6,7 @@ import numpy as np
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 
 # Define page navigation
-page = st.sidebar.radio("Navigation", ["\ud83c\udfe0 Welcome", "🔍 Prediction", "📊 Dashboard"])
+page = st.sidebar.radio("Navigation", ["🏠 Welcome", "🔍 Prediction", "📊 Dashboard"])
 
 if page == "\ud83c\udfe0 Welcome":
     st.markdown("""
@@ -291,6 +291,7 @@ elif page == "🔍 Prediction":
         )
     
     
+
 
 
 
