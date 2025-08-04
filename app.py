@@ -92,10 +92,10 @@ if st.session_state["page"] == "Home":
     
     col1, col2, col3 = st.columns([1,2,1])
     with col1:
-        if st.button("Predict Heart Disease ❤️"):
+        if st.button("Predict Heart Disease ❤️", use_container_width=True):
             st.session_state["page"] = "Heart Disease Prediction"
     with col3:
-        if st.button("View Dashboard 📊"):
+        if st.button("View Dashboard 📊", use_container_width=True):
             st.session_state["page"] = "View Dashboard"
 
 
@@ -349,6 +349,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
