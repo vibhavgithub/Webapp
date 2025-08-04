@@ -34,42 +34,35 @@ st.markdown("""
 
 def show_tableau_dashboard():
     tableau_html = """
-    <div class='tableauContainer' style='width: 100%; margin: auto, padding:20px;'>
-        <div class='tableauPlaceholder' id='viz1739257421829' style='position: relative; width: 80%; height: 40vh;'>
+    <div class='tableauContainer' style='width: 100%; margin: auto; padding: 20px;'>
+        <div class='tableauPlaceholder' id='viz1754340441275' style='position: relative'>
             <noscript>
-                      <a href='#'><img alt=' ' src='https://public.tableau.com/static/images/DB/DBDAProject_17392469401620/Dashboard1/1_rss.png' style='border: none; width: 100%;' /></a>
+                <a href='#'>
+                    <img alt=' ' src='https://public.tableau.com/static/images/Gl/Global_Superstore_Dashboard_17471306638670/Story1/1_rss.png' style='border: none' />
+                </a>
             </noscript>
-            <object class='tableauViz' style='display:none; width: 100%; height: 90vh;'>
+            <object class='tableauViz' style='display:none;'>
                 <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
                 <param name='embed_code_version' value='3' />
                 <param name='site_root' value='' />
-                <param name='name' value='DBDAProject_17392469401620/Dashboard1' />
+                <param name='name' value='Global_Superstore_Dashboard_17471306638670/Story1' />
                 <param name='tabs' value='yes' />
                 <param name='toolbar' value='yes' />
-                <param name='static_image' value='https://public.tableau.com/static/images/DB/DBDAProject_17392469401620/Dashboard1/1.png' />
+                <param name='static_image' value='https://public.tableau.com/static/images/Gl/Global_Superstore_Dashboard_17471306638670/Story1/1.png' />
                 <param name='animate_transition' value='yes' />
                 <param name='display_static_image' value='yes' />
                 <param name='display_spinner' value='yes' />
                 <param name='display_overlay' value='yes' />
                 <param name='display_count' value='yes' />
-                <param name='language' value='en-GB' />
+                <param name='language' value='en-US' />
             </object>
         </div>
     </div>
     <script type='text/javascript'>
-        var divElement = document.getElementById('viz1739257421829');
+        var divElement = document.getElementById('viz1754340441275');
         var vizElement = divElement.getElementsByTagName('object')[0];
-        if (divElement.offsetWidth > 800) {
-            vizElement.style.width = '100%';
-            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
-        } else if (divElement.offsetWidth > 500) {
-            vizElement.style.width = '100%';
-            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
-        } else {
-            vizElement.style.width = '100%';
-            vizElement.style.minHeight = '1750px';
-            vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px';
-        }
+        vizElement.style.width = '100%';
+        vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
         var scriptElement = document.createElement('script');
         scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
         vizElement.parentNode.insertBefore(scriptElement, vizElement);
@@ -365,6 +358,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             go_home()
     
     
+
 
 
 
