@@ -5,6 +5,33 @@ import pickle
 import numpy as np
 
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
+st.markdown("""
+    <style>
+        .stApp {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+        .main-title {
+            font-size: 42px;
+            font-weight: 700;
+            background: -webkit-linear-gradient(45deg, #7F00FF, #E100FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-align: center;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("<div class='main-title'>Welcome to Cardiovascular Disease Prediction App</div>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class='welcome-box'>
@@ -338,6 +365,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
