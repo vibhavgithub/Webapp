@@ -37,9 +37,13 @@ st.markdown("""
 <div class='welcome-box'>
     <p>This application helps in predicting the risk of cardiovascular disease based on user inputs.</p>
     <br>
-    <a href="/?page=\ud83d\udd0d+Prediction" target="_self"><button style='padding:10px 20px; background-color:#00c9a7; color:white; font-weight:bold; border:none; border-radius:8px;'>Start Prediction</button></a>
+    <a href="/?page=🔍+Prediction" target="_self">
+        <button style='padding:10px 20px; background-color:#00c9a7; color:white; font-weight:bold; border:none; border-radius:8px;'>Start Prediction</button>
+    </a>
     <br><br>
-    <a href="/?page=\ud83d\udcca+Dashboard" target="_self"><button style='padding:10px 20px; background-color:#6c5ce7; color:white; font-weight:bold; border:none; border-radius:8px;'>Go to Dashboard</button></a>
+    <a href="/?page=📊+Dashboard" target="_self">
+        <button style='padding:10px 20px; background-color:#6c5ce7; color:white; font-weight:bold; border:none; border-radius:8px;'>Go to Dashboard</button>
+    </a>
 </div>
 """, unsafe_allow_html=True)
 
@@ -361,6 +365,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
