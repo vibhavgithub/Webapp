@@ -5,55 +5,123 @@ import numpy as np
 
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 
-# Define page navigation
-page = st.sidebar.radio("Navigation", ["🏠 Welcome", "🔍 Prediction", "📊 Dashboard"])
+st.markdown("""
+    <style>
+        .stApp {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+        .main-title {
+            font-size: 42px;
+            font-weight: 700;
+            background: -webkit-linear-gradient(45deg, #7F00FF, #E100FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .welcome-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-align: center;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
-if page == "\ud83c\udfe0 Welcome":
-    st.markdown("""
-        <style>
-            .stApp {
-                background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-                color: white;
-            }
-            .main-title {
-                font-size: 42px;
-                font-weight: 700;
-                background: -webkit-linear-gradient(45deg, #7F00FF, #E100FF);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .welcome-box {
-                background-color: rgba(255, 255, 255, 0.15);
-                padding: 40px;
-                border-radius: 15px;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                text-align: center;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+st.markdown("<div class='main-title'>Welcome to Cardiovascular Disease Prediction App</div>", unsafe_allow_html=True)
 
-    st.markdown("<div class='main-title'>Welcome to Cardiovascular Disease Prediction App</div>", unsafe_allow_html=True)
+st.markdown("""
+<div class='welcome-box'>
+    <p>This application helps in predicting the risk of cardiovascular disease based on user inputs.</p>
+    <br>
+    <a href="/?page=\ud83d\udd0d+Prediction" target="_self"><button style='padding:10px 20px; background-color:#00c9a7; color:white; font-weight:bold; border:none; border-radius:8px;'>Start Prediction</button></a>
+    <br><br>
+    <a href="/?page=\ud83d\udcca+Dashboard" target="_self"><button style='padding:10px 20px; background-color:#6c5ce7; color:white; font-weight:bold; border:none; border-radius:8px;'>Go to Dashboard</button></a>
+</div>
+""", unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class='welcome-box'>
-        <p>This application helps in predicting the risk of cardiovascular disease based on user inputs.</p>
-        <br>
-        <a href="/?page=\ud83d\udd0d+Prediction" target="_self"><button style='padding:10px 20px; background-color:#00c9a7; color:white; font-weight:bold; border:none; border-radius:8px;'>Start Prediction</button></a>
-        <br><br>
-        <a href="/?page=\ud83d\udcca+Dashboard" target="_self"><button style='padding:10px 20px; background-color:#6c5ce7; color:white; font-weight:bold; border:none; border-radius:8px;'>Go to Dashboard</button></a>
+def show_tableau_dashboard():
+    tableau_html = """
+    <div class='tableauContainer' style='width: 100%; margin: auto, padding:20px;'>
+        <div class='tableauPlaceholder' id='viz1739257421829' style='position: relative; width: 80%; height: 40vh;'>
+            <noscript>
+                <a href='#'><img alt=' ' src='https://public.tableau.com/static/images/DB/DBDAProject_17392469401620/Dashboard1/1_rss.png' style='border: none; width: 100%;' /></a>
+            </noscript>
+            <object class='tableauViz' style='display:none; width: 100%; height: 90vh;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                <param name='embed_code_version' value='3' />
+                <param name='site_root' value='' />
+                <param name='name' value='DBDAProject_17392469401620/Dashboard1' />
+                <param name='tabs' value='yes' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image' value='https://public.tableau.com/static/images/DB/DBDAProject_17392469401620/Dashboard1/1.png' />
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+                <param name='language' value='en-GB' />
+            </object>
+        </div>
     </div>
-    """, unsafe_allow_html=True)
+    <script type='text/javascript'>
+        var divElement = document.getElementById('viz1739257421829');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        if (divElement.offsetWidth > 800) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else if (divElement.offsetWidth > 500) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else {
+            vizElement.style.width = '100%';
+            vizElement.style.minHeight = '1750px';
+            vizElement.style.maxHeight = (divElement.offsetWidth * 1.77) + 'px';
+        }
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+    </script>
+    """
+    st.components.v1.html(tableau_html, height=900)
 
-elif page == "📊 Dashboard":
-    st.markdown("<div class='main-title'>📊 Embedded Health Dashboard</div>", unsafe_allow_html=True)
+if "page" not in st.session_state:
+    st.session_state["page"] = "Home"
+
+if st.session_state["page"] == "Home":
     st.markdown("""
-    <iframe src="https://public.tableau.com/views/HeartHealthDashboard/Dashboard1" width="100%" height="600" frameborder="0"></iframe>
+        <div style=" display: flex; justify-content: center; align-items: center; height: 40vh; text-align: center;">
+            <div>
+                <h1>Welcome to Google Playstore Prediction Application</h1>
+                <p>Choose an option below to proceed</p>
+            </div>
+        </div>
     """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1,2,1])
+    with col1:
+        if st.button("Predict Heart Disease ❤️"):
+            st.session_state["page"] = "Heart Disease Prediction"
+    with col3:
+        if st.button("View Dashboard 📊"):
+            st.session_state["page"] = "View Dashboard"
 
-elif page == "🔍 Prediction":
+
+elif st.session_state["page"] == "View Dashboard":
+    st.markdown("<style>#dashboard-container { max-width: 100%; }</style>", unsafe_allow_html=True)
+    st.subheader("Interactive Tableau Dashboard")
+    with st.spinner("Loading Dashboard..."):
+        time.sleep(2)
+    show_tableau_dashboard()
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])  
+    with col4:
+        if st.button("Back to Home"):
+            st.session_state["page"] = "Home"
+
+elif st.session_state["page"] == "Heart Disease Prediction":
 
     # Load the trained model
     try:
@@ -289,8 +357,11 @@ elif page == "🔍 Prediction":
             "</div></div>",
             unsafe_allow_html=True
         )
+        if st.button("Back to Home"):
+            st.session_state["page"] = "Home"
     
     
+
 
 
 
