@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import numpy as np
+import time
 
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 st.markdown("""
@@ -310,7 +311,6 @@ elif st.session_state["page"] == "Heart Disease Prediction":
     
     
         if st.button("Predict", use_container_width=True):
-            # Create the DataFrame with the correct column order using feature_names
             user_input_df = pd.DataFrame([user_input_data], columns=feature_names)
     
     
@@ -345,10 +345,11 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             "</div></div>",
             unsafe_allow_html=True
         )
-        if st.button("Back to Home"):
+        if st.button("Back to Home", use_container_width=True):
             st.session_state["page"] = "Home"
     
     
+
 
 
 
