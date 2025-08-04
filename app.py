@@ -37,7 +37,7 @@ def show_tableau_dashboard():
     <div class='tableauContainer' style='width: 100%; margin: auto, padding:20px;'>
         <div class='tableauPlaceholder' id='viz1739257421829' style='position: relative; width: 80%; height: 40vh;'>
             <noscript>
-                <a href='#'><img alt=' ' src='https://public.tableau.com/static/images/DB/DBDAProject_17392469401620/Dashboard1/1_rss.png' style='border: none; width: 100%;' /></a>
+                <a href='#'><img alt=' ' src='https://public.tableau.com/app/profile/utkarsh.jain8626/viz/Global_Superstore_Dashboard_17471306638670/Story1?showOnboarding=true' style='border: none; width: 100%;' /></a>
             </noscript>
             <object class='tableauViz' style='display:none; width: 100%; height: 90vh;'>
                 <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
@@ -349,6 +349,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
     
     
+
 
 
 
