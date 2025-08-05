@@ -340,10 +340,11 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             st.session_state["page"] = "Home"
             st.experimental_rerun()
 
-        if st.button("Back to Home", use_container_width=True):
+        if st.button("Back to Home", use_container_width=True, "<div class='backhome' style='background-color:#fff3cd; color:#856404; padding: 6px; font-size:16px; border-radius: 6px;'>"):
             go_home()
     
     
+
 
 
 
