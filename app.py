@@ -105,7 +105,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
     # Load the trained model
     try:
-        with open('best_catboost_model.pkl', 'rb') as f:
+        with open('best_xgboost_model.pkl', 'rb') as f:
             model = pickle.load(f)
     except FileNotFoundError:
         st.error("Model file not found. Please ensure it's in the same directory.")
@@ -344,6 +344,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             go_home()
     
     
+
 
 
 
