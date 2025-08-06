@@ -331,7 +331,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             else:
               st.markdown(
             "<div style='text-align:center;'>"
-            "<div class='stAlert' style='background-color:#d1ecf1; color:#0c5460; margin: 4px; padding: 6px;font-size:16px; border-radius: 6px;'>"
+            "<div class='stAlert' style='background-color:#d1ecf1; color:#0c5460; margin: 6px; padding: 6px;font-size:16px; border-radius: 6px;'>"
             "ℹ️ Lower likelihood of heart disease."
             "</div></div>",
             unsafe_allow_html=True
@@ -344,6 +344,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             go_home()
     
     
+
 
 
 
