@@ -5,6 +5,46 @@ import numpy as np
 import time
 import sqlite3 # Import sqlite3
 
+db_name = 'user_input.db'
+table_name = 'cardio_predictions'
+table_structure = {
+    'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
+    'Height_(cm)': 'REAL',
+    'Weight_(kg)': 'REAL',
+    'BMI': 'REAL',
+    'Alcohol_Consumption': 'REAL',
+    'Fruit_Consumption': 'REAL',
+    'Green_Vegetables_Consumption': 'REAL',
+    'FriedPotato_Consumption': 'REAL',
+    'Age': 'INTEGER',
+    'Checkup_Encoded': 'INTEGER',
+    'General_Health_Encoded': 'INTEGER',
+    'Exercise_Encoded': 'INTEGER',
+    'Skin_Cancer_Encoded': 'INTEGER',
+    'Other_Cancer_Encoded': 'INTEGER',
+    'Depression_Encoded': 'INTEGER',
+    'Arthritis_Encoded': 'INTEGER',
+    'Diabetes_Encoded': 'INTEGER',
+    'Smoking_History_Encoded': 'INTEGER',
+    'Female': 'INTEGER',
+    'Male': 'INTEGER',
+    'BMI_Category_Encoded': 'INTEGER',
+    'Predicted_Heart_Disease': 'INTEGER' # To store the model's prediction
+}
+
+conn = sqlite3.connect(db_name)
+cursor = conn.cursor()
+
+columns = ", ".join([f'"{col}" {dtype}' for col, dtype in table_structure.items()])
+create_table_sql = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns});"
+
+cursor.execute(create_table_sql)
+
+conn.commit()
+conn.close()
+
+print(f"Database '{db_name}' and table '{table_name}' created or already exist.")
+
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 st.markdown("""
     <style>
@@ -400,3 +440,4 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
