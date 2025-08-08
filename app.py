@@ -9,7 +9,7 @@ st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction"
 st.markdown("""
     <style>
         div.stButton > button {
-                background-color: #00c9a7;
+                background-color: #00c9a5;
                 color: black;
                 font-weight: bold;
                 border-radius: 10px;
@@ -354,6 +354,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
 
 
 
