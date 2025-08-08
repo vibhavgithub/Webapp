@@ -312,7 +312,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
             st.markdown(
                  f"""
-        <div class='prediction-text' style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>
+        <div class='prediction-text' style='text-align: center; font-size: 18px; font-weight: bold; color: white;'>
             Probability of Heart Disease: {prediction_proba[0]*100:.2f}%
         </div>
         """,
@@ -342,3 +342,4 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
