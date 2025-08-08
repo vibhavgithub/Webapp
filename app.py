@@ -261,11 +261,11 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             if 'Alcohol_Consumption' in important_features:
                 user_inputs['Alcohol_Consumption'] = st.number_input("Alcohol Consumption (drinks/week)", 0, 100, 0)
             if 'Fruit_Consumption' in important_features:
-                user_inputs['Fruit_Consumption'] = st.number_input("Fruit Consumption (servings/day)", 0, 100, 30)
+                user_inputs['Fruit_Consumption'] = st.number_input("Fruit Consumption (servings/week)", 0, 100, 10)
             if 'Green_Vegetables_Consumption' in important_features:
-                 user_inputs['Green_Vegetables_Consumption'] = st.number_input("Green Vegetables (servings/day)", 0, 100, 30)
+                 user_inputs['Green_Vegetables_Consumption'] = st.number_input("Green Vegetables (servings/week)", 0, 100, 10)
             if 'FriedPotato_Consumption' in important_features:
-                user_inputs['FriedPotato_Consumption'] = st.number_input("Fried Potato (servings/week)", 0, 100, 0)
+                user_inputs['FriedPotato_Consumption'] = st.number_input("Fried Potato (servings/week)", 0, 100, 10)
             if 'Exercise_Encoded' in important_features:
                 user_inputs['Exercise_Encoded'] = st.selectbox("Exercise", [0, 1], format_func=lambda x: ["No", "Yes"][x])
             if 'Other_Cancer_Encoded' in important_features:
@@ -343,6 +343,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
 
 
 
