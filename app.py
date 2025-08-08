@@ -1,49 +1,9 @@
+
 import streamlit as st
 import pandas as pd
 import pickle
 import numpy as np
 import time
-import sqlite3 # Import sqlite3
-
-db_name = 'user_input.db'
-table_name = 'cardio_predictions'
-table_structure = {
-    'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
-    'Height_(cm)': 'REAL',
-    'Weight_(kg)': 'REAL',
-    'BMI': 'REAL',
-    'Alcohol_Consumption': 'REAL',
-    'Fruit_Consumption': 'REAL',
-    'Green_Vegetables_Consumption': 'REAL',
-    'FriedPotato_Consumption': 'REAL',
-    'Age': 'INTEGER',
-    'Checkup_Encoded': 'INTEGER',
-    'General_Health_Encoded': 'INTEGER',
-    'Exercise_Encoded': 'INTEGER',
-    'Skin_Cancer_Encoded': 'INTEGER',
-    'Other_Cancer_Encoded': 'INTEGER',
-    'Depression_Encoded': 'INTEGER',
-    'Arthritis_Encoded': 'INTEGER',
-    'Diabetes_Encoded': 'INTEGER',
-    'Smoking_History_Encoded': 'INTEGER',
-    'Female': 'INTEGER',
-    'Male': 'INTEGER',
-    'BMI_Category_Encoded': 'INTEGER',
-    'Predicted_Heart_Disease': 'INTEGER' # To store the model's prediction
-}
-
-conn = sqlite3.connect(db_name)
-cursor = conn.cursor()
-
-columns = ", ".join([f'"{col}" {dtype}' for col, dtype in table_structure.items()])
-create_table_sql = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns});"
-
-cursor.execute(create_table_sql)
-
-conn.commit()
-conn.close()
-
-print(f"Database '{db_name}' and table '{table_name}' created or already exist.")
 
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 st.markdown("""
@@ -76,8 +36,8 @@ def show_tableau_dashboard():
     tableau_html = """
         <div class='tableauPlaceholder' id='viz1754368306136' style='position: relative'>
         <noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ca&#47;cardiovasculardiseaserepresentation&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript>
-        <object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-        <param name='embed_code_version' value='3' />
+        <object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+        <param name='embed_code_version' value='3' /> 
         <param name='site_root' value='' />
         <param name='name' value='cardiovasculardiseaserepresentation&#47;Dashboard1' />
         <param name='tabs' value='yes' /><param name='toolbar' value='yes' />
@@ -86,12 +46,12 @@ def show_tableau_dashboard():
         <param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' />
         <param name='display_count' value='yes' /><param name='language' value='en-US' />
         <param name='filter' value='publish=yes' /></object>
-        </div>
-        <script type='text/javascript'>var divElement = document.getElementById('viz1754368306136');var vizElement = divElement.getElementsByTagName('object')[0];
-        if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-        else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-        else { vizElement.style.width='100%';vizElement.style.minHeight='1500px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}
-        var scriptElement = document.createElement('script');scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </div>                
+        <script type='text/javascript'>var divElement = document.getElementById('viz1754368306136');var vizElement = divElement.getElementsByTagName('object')[0];                    
+        if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} 
+        else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} 
+        else { vizElement.style.width='100%';vizElement.style.minHeight='1500px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}                     
+        var scriptElement = document.createElement('script');scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';vizElement.parentNode.insertBefore(scriptElement, vizElement);                
         </script>
     """
     st.components.v1.html(tableau_html, height=900)
@@ -108,7 +68,7 @@ if st.session_state["page"] == "Home":
             </div>
         </div>
     """, unsafe_allow_html=True)
-
+    
     col1, col2, col3 = st.columns([1,1,1])
     with col1:
         def go_to_prediction():
@@ -131,7 +91,7 @@ elif st.session_state["page"] == "View Dashboard":
     with st.spinner("Loading Dashboard..."):
         time.sleep(2)
     show_tableau_dashboard()
-    col1, col2, col3= st.columns([1, 1, 1])
+    col1, col2, col3= st.columns([1, 1, 1])  
     with col2:
         def go_home():
             st.session_state["page"] = "Home"
@@ -150,7 +110,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
     except FileNotFoundError:
         st.error("Model file not found. Please ensure it's in the same directory.")
         st.stop()
-
+    
     # Load the scaler
     try:
         with open('scaler.pkl', 'rb') as f:
@@ -158,7 +118,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
     except FileNotFoundError:
         st.error("Scaler file 'scaler.pkl' not found. Please ensure it's in the same directory.")
         st.stop()
-
+    
     st.markdown("""
         <style>
             /* Main background */
@@ -166,21 +126,21 @@ elif st.session_state["page"] == "Heart Disease Prediction":
                 background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
                 color: white;
             }
-
+    
             /* Scrollable input section */
             .scrollable-container {
                 max-height: 500px;
                 overflow-y: auto;
                 padding-right: 10px;
             }
-
+    
             /* Input fields */
             .stNumberInput > div > input, .stSelectbox > div > div {
                 background-color: rgba(255, 255, 255, 0.1);
                 color: white;
                 border: none;
             }
-
+    
             /* Styled button */
             div.stButton > button {
                 background-color: #00c9a7;
@@ -190,11 +150,11 @@ elif st.session_state["page"] == "Heart Disease Prediction":
                 border: none;
                 padding: 0.5rem 1rem;
             }
-
+    
             div.stButton > button:hover {
                 background-color: #00b49f;
             }
-
+    
             /* Prediction result box */
             .prediction-text {
                 background-color: rgba(255, 255, 255, 0.15);
@@ -204,14 +164,14 @@ elif st.session_state["page"] == "Heart Disease Prediction":
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
             }
-
+    
             .stAlert {
                 margin-top: 20px;
                 border-radius: 15px;
                 font-weight: bold;
                 padding: 10px;
             }
-
+    
             /* Custom title styling */
             .main-title {
                 font-size: 36px;
@@ -224,13 +184,13 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             }
         </style>
     """, unsafe_allow_html=True)
-
+    
     st.title("Cardiovascular Disease Prediction")
-
+    
     # Layout: left for inputs, spacer for gap, right for prediction
     left, gap, right = st.columns([1, 0.3, 2]) # Example ratio, can be adjusted
-
-
+    
+    
     # Define feature names - ensuring they match the training data
     feature_names = [
         'Height_(cm)', 'Weight_(kg)', 'BMI', 'Alcohol_Consumption', 'Fruit_Consumption',
@@ -239,8 +199,8 @@ elif st.session_state["page"] == "Heart Disease Prediction":
         'Depression_Encoded', 'Arthritis_Encoded', 'Diabetes_Encoded', 'Smoking_History_Encoded', 'Female', 'Male',
         'BMI_Category_Encoded'
     ]
-
-
+    
+    
     # Get feature importances from the loaded model
     try:
         importances = model.feature_importances_
@@ -248,15 +208,15 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             "Feature": feature_names,
             "Importance": importances
         }).sort_values(by="Importance", ascending=False)
-
+    
     except AttributeError:
         st.error("Could not get feature importances from the loaded model.")
         st.stop()
-
-
+    
+    
     # Get the features with non-zero importance
     important_features = feature_importances_df[feature_importances_df['Importance'] > 0]['Feature'].tolist()
-
+    
     with left:
         st.markdown("#### Enter Patient Information")
         user_inputs = {}
@@ -287,7 +247,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
                                                                                      "Within past 2 years", "Within past year"][x])
             if 'Depression_Encoded' in important_features:
                 user_inputs['Depression_Encoded'] = st.selectbox("Depression", [0, 1], format_func=lambda x: ["No", "Yes"][x])
-
+    
             if 'Height_(cm)' in important_features:
                  user_inputs['Height_(cm)'] = st.number_input("Height (cm)", min_value=100.0, max_value=250.0, value=170.0)
             if 'Weight_(kg)' in important_features:
@@ -313,23 +273,23 @@ elif st.session_state["page"] == "Heart Disease Prediction":
                 # BMI Category is derived from BMI, this is just to ensure the column is created
                 pass # No direct input needed as it's derived from 'Male'
             st.markdown('</div>', unsafe_allow_html=True)
-
-
+    
+    
     with right:
         st.markdown("<div style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>Prediction Result</div>", unsafe_allow_html=True)
-
+    
         # Prepare input data based on user_inputs dictionary
         # Initialize a dictionary with default values for all features
         user_input_data = {feature: 0 for feature in feature_names}
-
+    
         # Update with user inputs for important features
         for feature, value in user_inputs.items():
             user_input_data[feature] = value
-
+    
         # Handle derived features (Gender and BMI Category)
         user_input_data['Female'] = 1 if user_inputs.get('Male', 'Male') == 'Female' else 0
         user_input_data['Male'] = 1 if user_inputs.get('Male', 'Male') == 'Male' else 0
-
+    
         bmi_val = user_inputs.get('BMI', 25.0)
         if bmi_val < 18.5:
             user_input_data['BMI_Category_Encoded'] = 0
@@ -339,75 +299,17 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             user_input_data['BMI_Category_Encoded'] = 2
         else:
             user_input_data['BMI_Category_Encoded'] = 0
-
-
+    
+    
         if st.button("Predict", use_container_width=True):
             user_input_df = pd.DataFrame([user_input_data], columns=feature_names)
-
-
+    
+    
             # Scale the input
             user_input_scaled = scaler.transform(user_input_df)
-
+    
             # Make prediction
             prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
-            predicted_class = model.predict(user_input_scaled)[0] # Get the predicted class (0 or 1)
-
-            # Save user input and prediction to the database
-            db_name = 'user_input.db'
-            table_name = 'cardio_predictions'
-            table_structure = {
-                'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
-                'Height_(cm)': 'REAL',
-                'Weight_(kg)': 'REAL',
-                'BMI': 'REAL',
-                'Alcohol_Consumption': 'REAL',
-                'Fruit_Consumption': 'REAL',
-                'Green_Vegetables_Consumption': 'REAL',
-                'FriedPotato_Consumption': 'REAL',
-                'Age': 'INTEGER',
-                'Checkup_Encoded': 'INTEGER',
-                'General_Health_Encoded': 'INTEGER',
-                'Exercise_Encoded': 'INTEGER',
-                'Skin_Cancer_Encoded': 'INTEGER',
-                'Other_Cancer_Encoded': 'INTEGER',
-                'Depression_Encoded': 'INTEGER',
-                'Arthritis_Encoded': 'INTEGER',
-                'Diabetes_Encoded': 'INTEGER',
-                'Smoking_History_Encoded': 'INTEGER',
-                'Female': 'INTEGER',
-                'Male': 'INTEGER',
-                'BMI_Category_Encoded': 'INTEGER',
-                'Predicted_Heart_Disease': 'INTEGER'
-            }
-
-            try:
-                conn = sqlite3.connect(db_name)
-                cursor = conn.cursor()
-
-                # Prepare data for insertion including the prediction
-                columns_to_insert = list(table_structure.keys())
-                columns_to_insert.remove('id') # Exclude auto-incrementing id
-
-                # Create a dictionary with all values to insert, including the prediction
-                data_to_insert_dict = user_input_data.copy()
-                data_to_insert_dict['Predicted_Heart_Disease'] = int(predicted_class) # Ensure it's an integer
-
-                data_to_insert = [data_to_insert_dict.get(col) for col in columns_to_insert]
-
-                column_names = ", ".join([f'"{col}"' for col in columns_to_insert])
-                placeholders = ", ".join(["?"] * len(columns_to_insert))
-                insert_sql = f"INSERT INTO {table_name} ({column_names}) VALUES ({placeholders});"
-
-                cursor.execute(insert_sql, data_to_insert)
-                conn.commit()
-                st.success("User input and prediction saved to database.") # Provide user feedback
-            except sqlite3.Error as e:
-                st.error(f"Database error: {e}") # Provide user feedback on error
-                conn.rollback()
-            finally:
-                conn.close()
-
-
             st.markdown(
                  f"""
         <div class='prediction-text' style='text-align: center; font-size: 22px; font-weight: bold; color: white;'>
@@ -415,9 +317,9 @@ elif st.session_state["page"] == "Heart Disease Prediction":
         </div>
         """,
         unsafe_allow_html=True
-
+    
             )
-
+    
             if prediction_proba[0] > 0.5:
               st.markdown(
             "<div style='text-align:center;'>"
@@ -440,4 +342,3 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
-
