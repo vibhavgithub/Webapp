@@ -8,6 +8,18 @@ import time
 st.set_page_config(layout="wide", page_title="Cardiovascular Disease Prediction", page_icon="❤️")
 st.markdown("""
     <style>
+        div.stButton > button {
+                background-color: #00c9a7;
+                color: white;
+                font-weight: bold;
+                border-radius: 10px;
+                border: none;
+                padding: 0.5rem 1rem;
+            }
+    
+            div.stButton > button:hover {
+                background-color: #00b49f;
+            }
         .stApp {
             background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
             color: white;
@@ -159,7 +171,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             .prediction-text {
                 background-color: rgba(255, 255, 255, 0.15);
                 padding: 15px;
-                margin-top: 15px;
+                margin-top: 10px;
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
@@ -342,5 +354,6 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
 
 
