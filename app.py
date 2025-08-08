@@ -10,7 +10,7 @@ st.markdown("""
     <style>
         div.stButton > button {
                 background-color: #00c9a7;
-                color: white;
+                color: black;
                 font-weight: bold;
                 border-radius: 10px;
                 border: none;
@@ -354,6 +354,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
 
 
 
