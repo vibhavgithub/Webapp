@@ -158,8 +158,8 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             /* Prediction result box */
             .prediction-text {
                 background-color: rgba(255, 255, 255, 0.15);
-                padding: 20px;
-                margin-top: 20px;
+                padding: 15px;
+                margin-top: 15px;
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
@@ -312,7 +312,7 @@ elif st.session_state["page"] == "Heart Disease Prediction":
             prediction_proba = model.predict_proba(user_input_scaled)[:, 1]
             st.markdown(
                  f"""
-        <div class='prediction-text' style='text-align: center; font-size: 18px; font-weight: bold; color: white;'>
+        <div class='prediction-text' style='text-align: center; font-size: 20px; font-weight: bold; color: white;'>
             Probability of Heart Disease: {prediction_proba[0]*100:.2f}%
         </div>
         """,
@@ -342,4 +342,5 @@ elif st.session_state["page"] == "Heart Disease Prediction":
 
         if st.button("Back to Home", use_container_width=True):
             go_home()
+
 
